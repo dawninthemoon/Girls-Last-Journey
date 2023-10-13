@@ -18,19 +18,24 @@ MonoBehaviour:
   m_GUID: 0c97b37de2671d44ca59f571e280b1b9
   m_SerializeEntries:
   - m_GUID: d9c64ee6534cbd6498f3a698f8006a8f
-    m_Address: Assets/MemberEntityConfig
+    m_Address: MemberEntityConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 88f70bad12ec1104d8ba2014f0bc4108
-    m_Address: Assets/CombatStageConfig
+    m_Address: CombatStageConfig
     m_ReadOnly: 0
     m_SerializedLabels:
     - CombatConfig
   - m_GUID: 69354fc8857233644815841f47716022
-    m_Address: Assets/CombatWaveConfig
+    m_Address: CombatWaveConfig
     m_ReadOnly: 0
     m_SerializedLabels:
     - CombatConfig
+  - m_GUID: bb4c46c51da1055448b10d999ca2b01f
+    m_Address: Enemies
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyInfo
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
   m_SchemaSet:

@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatMain : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class CombatMain : MonoBehaviour {
+    [SerializeField] private MemberHandler _memberHandler;
+    [SerializeField] private EnemyHandler _enemyHandler;
+
+    private void Start() {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    private void Update() {
         
     }
 }

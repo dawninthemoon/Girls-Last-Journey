@@ -18,7 +18,7 @@ public class EnemyHandler : MonoBehaviour {
         assetLoader.LoadAssetsAsync<CombatWaveConfig>("CombatConfig", (x) => {
             _waveConfigDictionary = x.Result.ToDictionary(x => x.WaveRank);
         });
-        assetLoader.LoadAssetsAsync<EntityInfo>("EnemiesConfig", (x) => {
+        assetLoader.LoadAssetsAsync<EntityInfo>("EnemyInfo", (x) => {
             _enemyInfoDictionary = x.Result.ToDictionary(x => x.EntityID);
         });
 

@@ -16,7 +16,32 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 481d8fc8ae79577449fc0baf3575a860
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 138caf9ca5e374940af398bf972a0235
+    m_Address: Fx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b6f5ca16f6183d84abd2f7442ade35a1
+    m_Address: Projectiles
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectiles
+  - m_GUID: f77e294070198484d92b57c27106961e
+    m_Address: AllyPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ccbeee5026d1fc04a9477ea1d346f8eb
+    m_Address: DamageDisplayText
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b5f47466bc5a1c844a8527634e319343
+    m_Address: DamageUIElement
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fbb11515525e607408a2c60468c52e57
+    m_Address: EnemyPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
   m_SchemaSet:

@@ -16,7 +16,17 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 3db13028d9f41054dac3d8e3b11d2b98
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 0e6639aacbd1bd24e8264fe5b7d10666
+    m_Address: Effects
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioFx
+  - m_GUID: dfef0600e8c7bd548a16aaa375e765fd
+    m_Address: BGM
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BGM
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
   m_SchemaSet:
