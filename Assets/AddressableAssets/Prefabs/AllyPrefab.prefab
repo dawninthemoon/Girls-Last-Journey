@@ -185,8 +185,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 721335887
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -263824020, guid: 3daaea050d9a0a345b4a144afb97d875, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -512,7 +512,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4449168863988206492
@@ -682,7 +682,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6675826131135723717
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 6756375924567392600}
   - component: {fileID: 1666005879478970121}
   - component: {fileID: 166338467933781668}
-  - component: {fileID: -6134280753618378484}
+  - component: {fileID: 7510927839553009367}
   m_Layer: 6
   m_Name: AllyPrefab
   m_TagString: Ally
@@ -1038,7 +1038,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 12
---- !u!114 &-6134280753618378484
+--- !u!114 &7510927839553009367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1047,10 +1047,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7563314166462180942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c037a5b6368f664b8d6d57fb2bf2490, type: 3}
+  m_Script: {fileID: 11500000, guid: 27398042f7261934eabff24638d44a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bodyRenderer: {fileID: 1269893135007115034}
+  _bodyRenderer: {fileID: 0}
   _knockbackDuration: 0.15
   _friction: 1
 --- !u!1 &7770128589057490813

@@ -8,9 +8,9 @@ public class CombatMap : MonoBehaviour {
     public static Vector2 StageMinSize { get; private set; }
     public static Vector2 StageMaxSize { get; private set; }
 
-    public static void SetMapView(Vector3 origin) {
-        StageMinSize = (Vector2)origin + new Vector2(-Width / 2f, -Height / 2f);
-        StageMaxSize = (Vector2)origin + new Vector2(Width / 2f, Height / 2f);
+    public static void SetMapView(Vector2 origin) {
+        StageMinSize = origin + new Vector2(-Width / 2f, -Height / 2f);
+        StageMaxSize = origin + new Vector2(Width / 2f, Height / 2f);
     }
 
     public static Vector2 GetBoarderNormal(Vector2 position, float radius) {

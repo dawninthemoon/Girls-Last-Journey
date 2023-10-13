@@ -4,23 +4,17 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 public class EntitySpawner {
-    private ObjectPool<EntityBase> _allyObjectPool;
-    private ObjectPool<EntityBase> _enemyObjectPool;
+    private ObjectPool<EntityBase> _objectPool;
     private CombatDamageDisplay _damageDisplayer;
     
     private static readonly string AllyPrefabName = "AllyPrefab";
-    private static readonly string EnemyPrefabName = "EnemyPrefab";
 
-    public EntitySpawner(Transform entityParent, CombatDamageDisplay damageDisplayer) {
+    public EntitySpawner(string prefabName, Transform entityParent, CombatDamageDisplay damageDisplayer) {
         _damageDisplayer = damageDisplayer;
 
         AssetLoader.Instance.LoadAssetAsync<GameObject>(
-            AllyPrefabName,
-            (op) => OnPrefabLoadCompleted(ref _allyObjectPool, op.Result.GetComponent<EntityBase>(), entityParent)
-        );
-        AssetLoader.Instance.LoadAssetAsync<GameObject>(
-            EnemyPrefabName,
-            (op) => OnPrefabLoadCompleted(ref _enemyObjectPool, op.Result.GetComponent<EntityBase>(), entityParent)
+            prefabName,
+            (op) => OnPrefabLoadCompleted(ref _objectPool, op.Result.GetComponent<EntityBase>(), entityParent)
         );
     }
 
@@ -33,24 +27,14 @@ public class EntitySpawner {
         );
     }
 
-    public EntityBase CreateAlly(EntityDecorator entity) {
-        EntityBase instance = _allyObjectPool.GetObject();
-        instance.Initialize(entity);
-        return instance;
-    }
-
-    public void RemoveAlly(EntityBase entity) {
-        _allyObjectPool.ReturnObject(entity);
-    }
-
-    public EntityBase CreateEnemy(EntityDecorator entityDecorator) {
-        EntityBase instance = _enemyObjectPool.GetObject();
+    public EntityBase CreateEntity(EntityDecorator entityDecorator) {
+        EntityBase instance = _objectPool.GetObject();
         instance.Initialize(entityDecorator);
         return instance;
     }
 
-    public void RemoveEnemy(EntityBase entity) {
-        _enemyObjectPool.ReturnObject(entity);
+    public void RemoveEntity(EntityBase entity) {
+        _objectPool.ReturnObject(entity);
     }
 
     private EntityBase CreateEntityBase(EntityBase prefab, Transform entityParent) {

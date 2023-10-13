@@ -100,11 +100,11 @@ public class MemberHandler : MonoBehaviour {
 
     public void RemoveAllAllies(EntitySpawner spawner) {
         for (int i = 0; i < _activeAllies.Count; ++i) {
-            spawner.RemoveAlly(_activeAllies[i]);
+            spawner.RemoveEntity(_activeAllies[i]);
             _activeAllies.RemoveAt(i--);
         }
         for (int i = 0; i < _inactiveAllies.Count; ++i) {
-            spawner.RemoveAlly(_inactiveAllies[i]);
+            spawner.RemoveEntity(_inactiveAllies[i]);
             _inactiveAllies.RemoveAt(i--);
         }
     }

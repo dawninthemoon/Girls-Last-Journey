@@ -5,14 +5,18 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 
 public class EnemyHandler : MonoBehaviour {
+    [SerializeField] private CombatDamageDisplay _damageDisplayer;
     private Dictionary<int, CombatWaveConfig> _waveConfigDictionary;
     private KdTree<EntityBase> _activeEnemies;
     public KdTree<EntityBase> ActiveEnemies { get { return _activeEnemies; } }
     private Dictionary<string, EntityInfo> _enemyInfoDictionary;
     private EntityBase _enemyPrefab;
+    private EntitySpawner _enemySpawner;
+    private static readonly string EnemyPrefabName = "EnemyPrefab";
+
     private void Awake() {
         _activeEnemies = new KdTree<EntityBase>();
-
+        _enemySpawner = new EntitySpawner(EnemyPrefabName, transform, _damageDisplayer);
         var assetLoader = AssetLoader.Instance;
 
         assetLoader.LoadAssetsAsync<CombatWaveConfig>("CombatConfig", (x) => {
@@ -27,17 +31,13 @@ public class EnemyHandler : MonoBehaviour {
         });
     }
 
-    public void Progress(KdTree<EntityBase> allies, Truck truck) {
+    public void Progress(KdTree<EntityBase> allies) {
         foreach (EntityBase enemy in _activeEnemies) {
             EntityBase targetEntity = allies.FindClosest(enemy.transform.position);
             if (targetEntity != null && !targetEntity.IsUnloadCompleted) {
                 continue;
             }
             ITargetable target = targetEntity?.GetComponent<Agent>();
-            if (target == null && truck.MoveProgressEnd) {
-                target = truck;
-            }
-
             enemy.SetTarget(target);
         }
 
@@ -49,11 +49,13 @@ public class EnemyHandler : MonoBehaviour {
         }
     }
 
-    public void SpawnEnemies(int waveCount, CombatStageConfig stageConfig, EntitySpawner entitySpanwer) {
+    public void SpawnEnemies(int waveCount, CombatStageConfig stageConfig) {
         Vector2 stageMinSize = CombatMap.StageMinSize;
         Vector2 stageMaxSize = CombatMap.StageMaxSize;
 
-        int waveRank = stageConfig.StageInfoArray[waveCount - 1];
+        //int waveRank = stageConfig.StageInfoArray[waveCount - 1];
+        int waveRank = 1;
+
         CombatWaveConfig waveConfig = _waveConfigDictionary[waveRank];
         CombatWaveInfo selectedWave = waveConfig.WaveInfoArray[Random.Range(0, waveConfig.WaveInfoArray.Length)];
         
@@ -69,7 +71,7 @@ public class EnemyHandler : MonoBehaviour {
             
             EntityInfo selectedInfo = _enemyInfoDictionary[selectedWave.enemyIDArray[i]];
             EntityDecorator decorator = new EntityDecorator(selectedInfo);
-            EntityBase enemy = entitySpanwer.CreateEnemy(decorator);
+            EntityBase enemy = _enemySpawner.CreateEntity(decorator);
             enemy.transform.position = new Vector3(randX, y);
 
             _activeEnemies.Add(enemy);
@@ -78,7 +80,7 @@ public class EnemyHandler : MonoBehaviour {
 
     public void RemoveAllEnemies(EntitySpawner entitySpanwer) {
         for (int i = 0; i < _activeEnemies.Count; ++i) {
-            entitySpanwer.RemoveEnemy(_activeEnemies[i]);
+            entitySpanwer.RemoveEntity(_activeEnemies[i]);
             _activeEnemies.RemoveAt(i--);
         }
     }
