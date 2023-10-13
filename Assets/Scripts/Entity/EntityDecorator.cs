@@ -55,18 +55,6 @@ public class EntityDecorator : IEntityStatus {
             return finalMana;
         }
     }
-    public int Morale { 
-        get {
-            int finalMorale = Info.Morale;
-
-            if (Item)
-                finalMorale += Item.Morale;
-            foreach (IEntityStatus buff in _buffList) {
-                finalMorale += buff.Morale;
-            }
-            return finalMorale;
-        }
-    }
     public int Block {
         get {
             int finalBlock = Info.Block;

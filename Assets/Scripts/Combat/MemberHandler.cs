@@ -4,33 +4,26 @@ using UnityEngine;
 using RieslingUtils;
 
 public class MemberHandler : MonoBehaviour {
-    private KdTree<EntityBase> _activeAllies;
-    private List<EntityBase> _inactiveAllies;
-    private Truck _truck;
+    [SerializeField] private CombatDamageDisplay _damageDisplayer;
+    private KdTree<EntityBase> _members;
     private SynergyHandler _synergyHandler;
+    private MemberFactory _memberFactory;
+    private EntitySpawner _spawner;
 
-    public KdTree<EntityBase> ActiveAllies {
-        get { return _activeAllies; }
+    public KdTree<EntityBase> Members {
+        get { return _members; }
     }
-    public List<EntityBase> InactiveAllies {
-        get { return _inactiveAllies; }
-    }
-    public bool HasActiveAlly {
-        get { return _activeAllies.Count > 0; }
-    }
+    private static readonly string MemberPrefabName = "MemberPrefab";
 
     private void Awake() {
-        _activeAllies = new KdTree<EntityBase>(true);
-        _inactiveAllies = new List<EntityBase>();
+        _memberFactory = GetComponent<MemberFactory>();
+        _spawner = new EntitySpawner(MemberPrefabName, transform, _damageDisplayer);
+        _members = new KdTree<EntityBase>(true);
         _synergyHandler = new SynergyHandler();
     }
 
-    public void SetTruckObject(Truck truck) {
-        _truck = truck;
-    }
-
     public void Progress(EnemyHandler enemyHandler) {
-        foreach (EntityBase ally in _activeAllies) {
+        foreach (EntityBase ally in _members) {
             var activeEnemies = enemyHandler.ActiveEnemies;
             ITargetable target = activeEnemies.FindClosest(ally.transform.position)?.GetComponent<Agent>();
             ally.SetTarget(target);
@@ -38,53 +31,30 @@ public class MemberHandler : MonoBehaviour {
             ally.transform.position = CombatMap.ClampPosition(ally.transform.position, ally.Radius);
         }
 
-        for (int i = 0; i < _activeAllies.Count; ++i) {
-            var ally = _activeAllies[i];
+        for (int i = 0; i < _members.Count; ++i) {
+            var ally = _members[i];
             if (ally.Health <= 0 || !ally.gameObject.activeSelf) {
-                _activeAllies[i].SetTarget(null);
-                _activeAllies.RemoveAt(i--);
+                _members[i].SetTarget(null);
+                _members.RemoveAt(i--);
             }
         }
     }
 
-    public void InitalizeAllies(EntitySpawner spawner) {
-        /*
-        foreach (EntityDecorator entity in GameMain.PlayerData.Member) {
-            EntityBase newEntity = spawner.CreateAlly(entity);
-            newEntity.gameObject.SetActive(false);
-            _inactiveAllies.Add(newEntity);
-        }*/
-    }
-
-    public void ActiveAllAllies() {
-        for (int i = 0; i < _inactiveAllies.Count; ++i) {
-            OnEntityActive(_inactiveAllies[i]);
-            i--;
+    public void InitalizeMember() {
+        for (int i = 0; i < 3; ++i) {
+            EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
+            EntityBase newEntity = _spawner.CreateEntity(decorator);
+            _members.Add(newEntity);
         }
-        ApplySynergies();
-
-        SoundManager.Instance.PlayBGM("BGM1");
     }
 
     public void OnEntityActive(EntityBase entity) {
         entity.gameObject.SetActive(true);
-        _inactiveAllies.Remove(entity);
-        _activeAllies.Add(entity); 
-        // 넣었다 뺄 때마다 시너지가 바뀔 것을 상정. 나중에 수정 필요함.
+        _members.Add(entity); 
         _synergyHandler.AddSynergy(entity, true);
-        
-        StartCoroutine(
-            StartEaseParabola(
-                entity.transform,
-                () => {
-                    entity.IsUnloadCompleted = true; 
-                }
-            )
-        );
     }
 
     public void OnEntityInactive(EntityBase entity) {
-        _inactiveAllies.Add(entity);
         entity.SetTarget(null);
         _synergyHandler.AddSynergy(entity, false);
         ApplySynergies();
@@ -93,19 +63,15 @@ public class MemberHandler : MonoBehaviour {
     }
 
     public void DisarmAllAllies() {
-        for (int i = 0; i < _activeAllies.Count; ++i) {
-            _activeAllies[i].SetTarget(null);
+        for (int i = 0; i < _members.Count; ++i) {
+            _members[i].SetTarget(null);
         }
     }
 
     public void RemoveAllAllies(EntitySpawner spawner) {
-        for (int i = 0; i < _activeAllies.Count; ++i) {
-            spawner.RemoveEntity(_activeAllies[i]);
-            _activeAllies.RemoveAt(i--);
-        }
-        for (int i = 0; i < _inactiveAllies.Count; ++i) {
-            spawner.RemoveEntity(_inactiveAllies[i]);
-            _inactiveAllies.RemoveAt(i--);
+        for (int i = 0; i < _members.Count; ++i) {
+            spawner.RemoveEntity(_members[i]);
+            _members.RemoveAt(i--);
         }
     }
 
@@ -122,37 +88,11 @@ public class MemberHandler : MonoBehaviour {
     }
 
     private void ApplyBuffToAll(BuffConfig toApply, BuffConfig toRemove) {
-        foreach (EntityBase entity in _activeAllies) {
+        foreach (EntityBase entity in _members) {
             entity.BuffControl.AddBuff(toApply);
             if (toRemove != null) {
                 entity.BuffControl.RemoveBuff(toRemove);
             }
         }
-    }
-
-    private IEnumerator StartEaseParabola(Transform target, System.Action callback) {
-        float timeAgo = 0f;
-        float targetTime = 1f;
-
-        Vector2 start = _truck.transform.position;
-        Vector2 end = start;
-        end.y -= _truck.Height * 0.75f;
-        float xOffset = Random.Range(_truck.Width * 0.25f, _truck.Width);
-        xOffset *= Random.Range(0, 2) == 0 ? -1f : 1f;
-        end.x += xOffset;
-
-        Vector2 p1 = _truck.Position;
-        p1.y += 100f;
-
-        while (timeAgo < targetTime) {
-            timeAgo += Time.deltaTime;
-
-            Vector2 p = Bezier.GetPoint(start, p1, end, timeAgo / targetTime);
-            target.position = p;
-
-            yield return null;
-        }
-
-        callback();
     }
 }

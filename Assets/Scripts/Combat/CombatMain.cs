@@ -16,13 +16,14 @@ public class CombatMain : MonoBehaviour {
 
         CombatMap.SetMapView(Vector2.zero);
 
+        _memberHandler.InitalizeMember();
         _waveHandler.StartNewWave();
         TargetDetectProgress().Forget();
     }
     
     private async UniTaskVoid TargetDetectProgress() {
         _memberHandler.Progress(_enemyHandler);
-        _enemyHandler.Progress(_memberHandler.ActiveAllies);
+        _enemyHandler.Progress(_memberHandler.Members);
 
         await UniTask.Delay(TimeSpan.FromSeconds(_targetDetectionDelay));
     }

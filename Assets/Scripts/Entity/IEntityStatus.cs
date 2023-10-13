@@ -1,7 +1,6 @@
 public interface IEntityStatus {
     int Health { get; }
     int Mana { get; }
-    int Morale { get; }
     int Block { get; }
     int AttackDamage { get; }
     float AttackSpeed { get; }

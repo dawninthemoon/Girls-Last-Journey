@@ -6,8 +6,6 @@ using Cysharp.Threading.Tasks;
 public class EntitySpawner {
     private ObjectPool<EntityBase> _objectPool;
     private CombatDamageDisplay _damageDisplayer;
-    
-    private static readonly string AllyPrefabName = "AllyPrefab";
 
     public EntitySpawner(string prefabName, Transform entityParent, CombatDamageDisplay damageDisplayer) {
         _damageDisplayer = damageDisplayer;

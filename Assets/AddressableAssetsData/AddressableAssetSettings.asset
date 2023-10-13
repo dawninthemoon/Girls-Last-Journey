@@ -46,6 +46,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87e79e39e1df4a546b1d2071237a4b47, type: 2}
   - {fileID: 11400000, guid: 61a7ddfc51b2712429caee4dedf0bddb, type: 2}
   - {fileID: 11400000, guid: 9dfc822adfe99b04aa012dc9afdf1564, type: 2}
+  - {fileID: 11400000, guid: 6a63b10e5b443824597f7f96e57f7c08, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -91,6 +92,7 @@ MonoBehaviour:
     - BGM
     - AudioFx
     - EnemyInfo
+    - MemberInfo
     - Projectiles
   m_SchemaTemplates: []
   m_GroupTemplateObjects:

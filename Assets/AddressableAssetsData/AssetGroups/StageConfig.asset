@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: StageConfig
+  m_EditorClassIdentifier: 
+  m_GroupName: StageConfig
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0c97b37de2671d44ca59f571e280b1b9
+  m_SerializeEntries:
+  - m_GUID: 88f70bad12ec1104d8ba2014f0bc4108
+    m_Address: CombatStageConfig
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CombatConfig
+  - m_GUID: 69354fc8857233644815841f47716022
+    m_Address: CombatWaveConfig
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CombatConfig
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9f483506e8e2bd245a8bd3eaa37888c8, type: 2}
+    - {fileID: 11400000, guid: af806d5431284644db15b137cca2a4a0, type: 2}

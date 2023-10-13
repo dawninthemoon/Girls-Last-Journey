@@ -116,11 +116,11 @@ public class EntityBase : MonoBehaviour {
 
         _healthManaControl.AddMana(10);
 
-        AttackConfig config = Info.EntityAttackConfig;
+        AttackConfig config = Info.EntityAttackConfig.Config;
         if (_healthManaControl.IsManaFull) {
             // Use Skill
             _healthManaControl.Mana = 0;
-            config = Info.EntitySkillConfig;
+            config = Info.EntitySkillConfig.Config;
         }
         _animationControl.PlayAttackAnimation();
 

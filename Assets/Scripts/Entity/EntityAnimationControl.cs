@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Animations;
 
 public class EntityAnimationControl : MonoBehaviour {
     [SerializeField] private SpriteRenderer _bodyRenderer = null;
