@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8324293121755720202}
   - component: {fileID: 3211034325056905874}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ObstacleDetector
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 105285708597758762}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 659735162786073476}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Morale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8566413486117650258}
   - component: {fileID: 1269893135007115034}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4385686196055575816}
   - component: {fileID: 8564045728107464924}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 103760758875521920}
   - component: {fileID: 7639899686240100445}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: HandImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627383007621313967}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Detectors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7107780542858152718}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: BulletTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7869432828650510218}
   - component: {fileID: 2557673011407065761}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: MpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6244015553851370827}
   - component: {fileID: 3051448423667409104}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9100749336996969131}
   - component: {fileID: 5860293249618776841}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3658777802280825658}
   - component: {fileID: 5167906755132261554}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ContextSolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +739,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1788867292128948459}
   - component: {fileID: 5548152561739969643}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: TargetDetector
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -776,10 +776,10 @@ MonoBehaviour:
   _targetDetectionRange: 2000
   _obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 320
   _targetLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
 --- !u!1 &7317591344448165629
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5879802968770584942}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8493856195555849727}
   - component: {fileID: 1886358404995584571}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ObstacleAvoidanceBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 1666005879478970121}
   - component: {fileID: 166338467933781668}
   - component: {fileID: 7510927839553009367}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: AllyPrefab
   m_TagString: Ally
   m_Icon: {fileID: 0}
@@ -1065,7 +1065,7 @@ GameObject:
   - component: {fileID: 4473268426871219783}
   - component: {fileID: 7997289244159426665}
   - component: {fileID: 3442727819709197587}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1250,7 +1250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6757561857931197309}
   - component: {fileID: 4998986651724670811}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: SeekBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1294,7 +1294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7877899836400111075}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: SteeringBehaviours
   m_TagString: Untagged
   m_Icon: {fileID: 0}

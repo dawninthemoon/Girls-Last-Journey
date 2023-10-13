@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2863251678379950189}
   - component: {fileID: 6342512161991760440}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011637819407501207}
   - component: {fileID: 601554995912169060}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ObstacleAvoidanceBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646108219751093757}
   - component: {fileID: 2285651419002795134}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: SeekBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952788661930694680}
   - component: {fileID: 5015573407580749863}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: TargetDetector
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -306,10 +306,10 @@ MonoBehaviour:
   _targetDetectionRange: 2000
   _obstaclesLayerMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 384
   _targetLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
 --- !u!1 &5360882695104130273
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415993465750348160}
   - component: {fileID: 405065975066996333}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: MpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8583576875536704844}
   - component: {fileID: 6428367586612677971}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ObstacleDetector
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -571,7 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1024038291938102374}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: SteeringBehaviours
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,7 +606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4200234806788427006}
   - component: {fileID: 4477610433740179850}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ContextSolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 9171948919997775683}
   - component: {fileID: -378373790608198248}
   - component: {fileID: 6071219182072076084}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: EnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -927,7 +927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1962751622985663327}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Detectors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
