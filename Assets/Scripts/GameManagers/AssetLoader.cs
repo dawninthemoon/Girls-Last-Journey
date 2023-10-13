@@ -6,12 +6,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Cysharp.Threading.Tasks;
 
-public interface ILoadable {
-    static bool IsLoadCompleted {
-        get;
-    }
-}
-
 public class AssetLoader : Singleton<AssetLoader> {
     public AsyncOperationHandle<T> LoadAssetAsync<T>(string key) where T : Object {
         return Addressables.LoadAssetAsync<T>(key);

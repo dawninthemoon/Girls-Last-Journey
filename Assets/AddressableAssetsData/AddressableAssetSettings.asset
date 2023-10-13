@@ -43,6 +43,9 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: d4c6c6bc8b8b5ff47afea085ebcc3afe, type: 2}
   - {fileID: 11400000, guid: 7b2ea399d4496304c88427420ee70d3c, type: 2}
+  - {fileID: 11400000, guid: 87e79e39e1df4a546b1d2071237a4b47, type: 2}
+  - {fileID: 11400000, guid: 61a7ddfc51b2712429caee4dedf0bddb, type: 2}
+  - {fileID: 11400000, guid: 9dfc822adfe99b04aa012dc9afdf1564, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -84,6 +87,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - CombatConfig
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 114913bfc0406ca418ffcafabf072521, type: 2}

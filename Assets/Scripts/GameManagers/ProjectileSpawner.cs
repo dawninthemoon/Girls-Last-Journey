@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class ProjectileSpawner : Singleton<ProjectileSpawner>, ILoadable {
+public class ProjectileSpawner : Singleton<ProjectileSpawner> {
     private static readonly string ProjectilePrefabKey = "Projectiles";
     private Dictionary<string, ObjectPool<ProjectileBase>> _projectileObjectPoolDictionary;
-    public static bool IsLoadCompleted { 
-        get;
-        private set;
-    }
+
     public ProjectileSpawner() {
         _projectileObjectPoolDictionary = new Dictionary<string, ObjectPool<ProjectileBase>>();
         AssetLoader.Instance.LoadAssetsAsync<GameObject>(ProjectilePrefabKey, (handle) => {
             OnPrefabLoadCompleted(handle.Result);
-            IsLoadCompleted = true;
         });
     }
 
