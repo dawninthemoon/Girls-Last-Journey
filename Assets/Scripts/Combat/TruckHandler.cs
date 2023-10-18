@@ -4,6 +4,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 public class TruckHandler : MonoBehaviour {
+    [SerializeField] private CombatReward _rewardControl;
     [SerializeField] private Truck _truckObject;
     private TruckDirectionSelect _truckDirectionSelector;
 
@@ -30,7 +31,7 @@ public class TruckHandler : MonoBehaviour {
     private async UniTaskVoid DropChest() {
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
-        
+        _rewardControl.SpawnRewardAt(transform.position);
     }
 
     private void OnTruckMoveEnd() {

@@ -64,6 +64,14 @@ public class InteractiveEntity : MonoBehaviour {
         }
     }
 
+    public void ClearAllEvents() {
+        _onMouseDownEvent.RemoveAllListeners();
+        _onMouseDragEvent.RemoveAllListeners();
+        _onMouseExitEvent.RemoveAllListeners();
+        _onMouseOverEvent.RemoveAllListeners();
+        _onMouseUpEvent.RemoveAllListeners();
+    }
+
     private bool CheckIsInteractive() {
         if (!InteractiveDictionary.TryGetValue(_type, out bool isInteractive)) {
             isInteractive = true;

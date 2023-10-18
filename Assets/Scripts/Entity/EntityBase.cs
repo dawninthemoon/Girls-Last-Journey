@@ -156,6 +156,10 @@ public class EntityBase : MonoBehaviour {
         }
     }
 
+    public void EquipItem(EntityItem item) {
+        _entityDecorator.Item = item;
+    }
+
     private void OnEntityDead() {
         gameObject.SetActive(false);
     }

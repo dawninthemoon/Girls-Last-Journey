@@ -99,12 +99,14 @@ public class MemberHandler : MonoBehaviour {
 
     private void SetInteractiveSettings(EntityBase baseEntity) {
         InteractiveEntity interactive = baseEntity.GetComponent<InteractiveEntity>();
+        interactive.ClearAllEvents();
+        
         interactive.OnMouseDownEvent.AddListener(() => {
             baseEntity.CanBehaviour = false;
         });
 
         interactive.OnMouseDragEvent.AddListener(() => {
-            Vector2 mousePos = MouseUtils.GetMouseWorldPosition();
+            Vector2 mousePos = ExMouse.GetMouseWorldPosition();
             baseEntity.transform.position = mousePos;
         });
 

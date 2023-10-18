@@ -83,14 +83,14 @@ namespace RieslingUtils {
         }
     }
 
-    public static class EnumUtil {
+    public static class ExEnum {
         public static T Parse<T>(string str) {
             T rarity = (T)System.Enum.Parse(typeof(T), str);
             return rarity;
         }
     }
 
-    public static class StringUtils {
+    public static class ExString {
         private static readonly string RegexContainsPrefix = "^.*(";
         private static readonly string RegexContainsSuffix = ").*";
         public static bool Contains(string str, string pattern) {
@@ -98,7 +98,7 @@ namespace RieslingUtils {
         }
     }
 
-    public static class MouseUtils {
+    public static class ExMouse {
         public static Vector3 GetMouseWorldPosition() {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.z = 0f;
@@ -112,9 +112,21 @@ namespace RieslingUtils {
         }
     }
 
-    public static class UnityUtils {
+    public static class ExUnity {
         public static void ToggleGameObject(this GameObject obj) {
             obj.SetActive(!obj.activeSelf);
+        }
+    }
+
+    public static class ExList {
+        public static T GetRandomElement<T>(this IList<T> list) where T : class {
+            T result = null;
+            int numOfElements = list.Count;
+            if (numOfElements > 0) {
+                int randomIndex = Random.Range(0, numOfElements);
+                result = list[randomIndex];
+            }
+            return result;
         }
     }
 }
