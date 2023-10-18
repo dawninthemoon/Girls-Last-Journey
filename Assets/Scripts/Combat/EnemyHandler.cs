@@ -36,9 +36,6 @@ public class EnemyHandler : MonoBehaviour {
     public void Progress(KdTree<EntityBase> allies) {
         foreach (EntityBase enemy in _activeEnemies) {
             EntityBase targetEntity = allies.FindClosest(enemy.transform.position);
-            if (targetEntity != null && !targetEntity.IsUnloadCompleted) {
-                continue;
-            }
             ITargetable target = targetEntity?.GetComponent<Agent>();
             enemy.SetTarget(target);
         }

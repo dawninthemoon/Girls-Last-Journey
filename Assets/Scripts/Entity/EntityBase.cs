@@ -49,7 +49,6 @@ public class EntityBase : MonoBehaviour {
     public Vector2 HandDirection { get; private set; }
     public int AttackDamage { get { return _entityDecorator.AttackDamage; } }
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
-    public bool IsUnloadCompleted { get; set; }
     private bool _canBehaviour = true;
 
     private void Awake() {
@@ -65,7 +64,6 @@ public class EntityBase : MonoBehaviour {
     }
 
     public void Initialize(EntityDecorator entityDecorator) {
-        IsUnloadCompleted = false;
         _entityDecorator = entityDecorator;
         _bulletPosition.localPosition = Info.bulletOffset;
 
@@ -163,7 +161,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (IsUnloadCompleted && (other.CompareTag("Enemy") || other.CompareTag("Ally"))) {
+        if ((other.CompareTag("Enemy") || other.CompareTag("Ally"))) {
             Vector3 direction = (other.transform.position - transform.position).normalized;
             other.transform.position += direction * 100f * Time.deltaTime;
         }
