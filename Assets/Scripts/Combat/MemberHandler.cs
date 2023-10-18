@@ -44,6 +44,7 @@ public class MemberHandler : MonoBehaviour {
         for (int i = 0; i < 3; ++i) {
             EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
             EntityBase newEntity = _spawner.CreateEntity(decorator);
+            SetInteractiveSettings(newEntity);
             _members.Add(newEntity);
         }
     }
@@ -94,5 +95,21 @@ public class MemberHandler : MonoBehaviour {
                 entity.BuffControl.RemoveBuff(toRemove);
             }
         }
+    }
+
+    private void SetInteractiveSettings(EntityBase baseEntity) {
+        InteractiveEntity interactive = baseEntity.GetComponent<InteractiveEntity>();
+        interactive.OnMouseDownEvent.AddListener(() => {
+            baseEntity.CanBehaviour = false;
+        });
+
+        interactive.OnMouseDragEvent.AddListener(() => {
+            Vector2 mousePos = MouseUtils.GetMouseWorldPosition();
+            baseEntity.transform.position = mousePos;
+        });
+
+        interactive.OnMouseUpEvent.AddListener(() => {
+            baseEntity.CanBehaviour = true;
+        });
     }
 }

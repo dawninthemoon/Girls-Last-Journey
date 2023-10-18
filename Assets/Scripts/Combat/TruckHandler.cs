@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class TruckHandler : MonoBehaviour {
     [SerializeField] private Truck _truckObject;
@@ -22,6 +23,14 @@ public class TruckHandler : MonoBehaviour {
         var config = _truckDirectionSelector.GetTruckMoveConfig(start, targetPosition);
 
         _truckObject.StartMove(config.Item1, config.Item2, config.Item3, OnTruckMoveEnd);
+
+        DropChest().Forget();
+    }
+
+    private async UniTaskVoid DropChest() {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
+
+        
     }
 
     private void OnTruckMoveEnd() {

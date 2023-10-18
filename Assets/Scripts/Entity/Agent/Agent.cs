@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using RieslingUtils;
+using Cysharp.Threading.Tasks;
 
 public class Agent : MonoBehaviour, ITargetable {
     [SerializeField] private List<SteeringBehaviour> _steeringBehaviours = null;
@@ -44,10 +44,6 @@ public class Agent : MonoBehaviour, ITargetable {
         ExecuteAgent();
     }
 
-    private void Start() {
-        InvokeRepeating("PerformDetection", 0f, _detectionDelay);
-    }
-
     private void Update() {
         OnMovementInput?.Invoke(_movementInput);
     }
@@ -56,37 +52,44 @@ public class Agent : MonoBehaviour, ITargetable {
         _aiData.SelectedTarget = target;
     }
 
-    private void PerformDetection() {
-        foreach (Detector detector in _detectors) {
-            detector.Detect(_aiData);
+    private void ExecuteAgent() {
+        PerformDetection().Forget();
+        Chase().Forget();
+        Attack().Forget();
+    }
+
+
+    private async UniTaskVoid PerformDetection() {
+        while (gameObject.activeSelf) {
+            foreach (Detector detector in _detectors) {
+                detector.Detect(_aiData);
+            }
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_detectionDelay));
         }
     }
-
-    private void ExecuteAgent() {
-        StartCoroutine(Chase());
-        StartCoroutine(Attack());
-    }
-
-    private IEnumerator Chase() {
+    
+    private async UniTaskVoid Chase() {
         while (gameObject.activeSelf) {
             _movementInput = Vector2.zero;
             if (_aiData.SelectedTarget != null && !_stopMovement) {
                 _movementInput = _movementDirectionSolver.GetDirectionToMove(_steeringBehaviours, _aiData);
             }
-            yield return YieldInstructionCache.WaitForSeconds(_aiUpdateDelay);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_aiUpdateDelay));
         }
     }
 
-    private IEnumerator Attack() {
+    private async UniTaskVoid Attack() {
         while (gameObject.activeSelf) {
             if (_aiData.SelectedTarget != null) {
                 float distance = Vector2.Distance(_aiData.SelectedTarget.Position, transform.position);
                 if (distance - Mathf.Sqrt(_aiData.SelectedTarget.Radius) < _entityStatus.AttackRange) {
                     OnAttackRequested?.Invoke();
-                    yield return YieldInstructionCache.WaitForSeconds(1f / _entityStatus.AttackSpeed);
+
+                    float attackDelay = 1f / _entityStatus.AttackSpeed;
+                    await UniTask.Delay(System.TimeSpan.FromSeconds(attackDelay));
                 }
             }
-            yield return YieldInstructionCache.WaitForSeconds(_aiUpdateDelay);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_aiUpdateDelay));
         }
     }
 

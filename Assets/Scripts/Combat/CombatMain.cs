@@ -25,7 +25,7 @@ public class CombatMain : MonoBehaviour {
     }
     
     private async UniTaskVoid TargetDetectProgress() {
-        while (true) {
+        while (gameObject.activeSelf) {
             _memberHandler.Progress(_enemyHandler);
             _enemyHandler.Progress(_memberHandler.Members);
 

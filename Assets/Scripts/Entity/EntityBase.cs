@@ -49,7 +49,7 @@ public class EntityBase : MonoBehaviour {
     public Vector2 HandDirection { get; private set; }
     public int AttackDamage { get { return _entityDecorator.AttackDamage; } }
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
-    private bool _canBehaviour = true;
+    public bool CanBehaviour { get; set; } = true;
 
     private void Awake() {
         _agent = GetComponent<Agent>();
@@ -79,7 +79,7 @@ public class EntityBase : MonoBehaviour {
 
     private void Update() {
         if (BuffControl != null) {
-            _canBehaviour = !BuffControl.IsDebuffExists("stun");
+            CanBehaviour = !BuffControl.IsDebuffExists("stun");
         }
     }
 
@@ -93,7 +93,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void Move(Vector2 direction) {
-        if (!_canBehaviour) {
+        if (!CanBehaviour) {
             return;
         }
         _animationControl.SetMoveAnimationState(!direction.Equals(Vector2.zero));
@@ -110,7 +110,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void Attack() {
-        if (!_canBehaviour) {
+        if (!CanBehaviour) {
             return;
         }
 

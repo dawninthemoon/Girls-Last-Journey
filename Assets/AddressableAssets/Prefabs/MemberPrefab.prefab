@@ -598,7 +598,7 @@ SpriteRenderer:
   m_Size: {x: 32, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6137065905238589466
@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 1332132110147236233}
   - component: {fileID: 7163469659208089624}
   - component: {fileID: 5452822171537124122}
+  - component: {fileID: 4316022400435506024}
   - component: {fileID: 7563314166462180937}
   - component: {fileID: 5070841771996470668}
   - component: {fileID: 6756375924567392600}
@@ -955,6 +956,34 @@ MonoBehaviour:
   _bodyRenderer: {fileID: 1269893135007115034}
   _weaponRenderer: {fileID: 3051448423667409104}
   _handTransform: {fileID: 5879802968770584942}
+--- !u!114 &4316022400435506024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7563314166462180942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f70e48cdbbb35409b6465330bd4c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  _onMouseOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _onMouseDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _onMouseDragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _onMouseUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _onMouseExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!95 &7563314166462180937
 Animator:
   serializedVersion: 4

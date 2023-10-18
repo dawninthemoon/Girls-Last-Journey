@@ -8,7 +8,7 @@ public class EntityDecorator : IEntityStatus {
         get;
         private set;
     }
-    public Belongings Item {
+    public EntityItem Item {
         get;
         set;
     }

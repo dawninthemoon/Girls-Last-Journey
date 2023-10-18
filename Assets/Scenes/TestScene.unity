@@ -487,7 +487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 405575738}
   - component: {fileID: 405575739}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BoarderBottom
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1086,7 +1086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 652758015}
   - component: {fileID: 652758016}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BoarderRight
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -1144,7 +1144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668608918}
   - component: {fileID: 668608919}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BoarderLeft
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -2486,7 +2486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652190635}
   - component: {fileID: 1652190636}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BoarderTop
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
