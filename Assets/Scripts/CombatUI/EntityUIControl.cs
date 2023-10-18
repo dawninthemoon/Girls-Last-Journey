@@ -21,6 +21,9 @@ public class EntityUIControl : MonoBehaviour {
     }
 
     public void UpdateManaBar(int mana, int maxMana) {
+        if (Mathf.Approximately(maxMana, default(float))) {
+            return;
+        }
         var mpBarScale = _mpBarTransform.localScale;
         mpBarScale.x = (float)mana / maxMana * 0.7f;
         _mpBarTransform.localScale = mpBarScale;

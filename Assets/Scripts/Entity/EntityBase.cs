@@ -24,11 +24,11 @@ public class EntityBase : MonoBehaviour {
             if (_entityDecorator == null) {
                 return 20f;
             }
-            return Info.BodyRadius;
+            return Info.bodyRadius;
         }
     }
     public string ID {
-        get { return Info.EntityID; }
+        get { return Info.entityID; }
     }
     public int Health { 
         get { return _healthManaControl.Health; }
@@ -37,10 +37,10 @@ public class EntityBase : MonoBehaviour {
         get { return _healthManaControl.Mana; }
     }
     public SynergyType Synergy1 {
-        get { return Info.Synergy1; }
+        get { return Info.synergy1; }
     }
     public SynergyType Synergy2 {
-        get { return Info.Synergy2; }
+        get { return Info.synergy2; }
     }
     public SynergyType ExtraSynergy {
         get { return _entityDecorator.ExtraSynergy; }
@@ -67,10 +67,12 @@ public class EntityBase : MonoBehaviour {
     public void Initialize(EntityDecorator entityDecorator) {
         IsUnloadCompleted = false;
         _entityDecorator = entityDecorator;
-        _bulletPosition.localPosition = Info.BulletOffset;
+        _bulletPosition.localPosition = Info.bulletOffset;
+
+        Sprite weaponSprite = Info.attackConfig.Config.weaponSprite;
 
         _healthManaControl.Initialize(entityDecorator);
-        _animationControl.Initialize(Info.BodySprite, Info.WeaponSprite, Info.AnimatorController);
+        _animationControl.Initialize(Info.bodySprite, weaponSprite, Info.animatorController);
         
         _agent.Initialize(_entityDecorator, Radius);
 
@@ -116,11 +118,11 @@ public class EntityBase : MonoBehaviour {
 
         _healthManaControl.AddMana(10);
 
-        AttackConfig config = Info.EntityAttackConfig.Config;
+        AttackConfig config = Info.attackConfig.Config;
         if (_healthManaControl.IsManaFull) {
             // Use Skill
             _healthManaControl.Mana = 0;
-            config = Info.EntitySkillConfig.Config;
+            config = Info.skillConfig.Config;
         }
         _animationControl.PlayAttackAnimation();
 

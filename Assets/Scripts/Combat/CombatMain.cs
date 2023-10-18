@@ -11,6 +11,9 @@ public class CombatMain : MonoBehaviour {
     [SerializeField] private WaveHandler _waveHandler;
 
     private async UniTaskVoid Start() {
+        var soundManager = SoundManager.Instance;
+        var projectileSpawner = ProjectileSpawner.Instance;
+
         // 나중에 로드되면 시작하게끔 수정
         await UniTask.Delay(TimeSpan.FromSeconds(3f));
 

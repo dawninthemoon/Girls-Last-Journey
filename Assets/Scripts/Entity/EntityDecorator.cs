@@ -33,7 +33,7 @@ public class EntityDecorator : IEntityStatus {
 
     public int Health { 
         get {
-            int finalHealth = Info.Health;
+            int finalHealth = Info.status.Health;
 
             if (Item)
                 finalHealth += Item.Health;
@@ -45,7 +45,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int Mana { 
         get {
-            int finalMana = Info.Mana;
+            int finalMana = Info.status.Mana;
 
             if (Item)
                 finalMana += Item.Mana;
@@ -57,7 +57,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int Block {
         get {
-            int finalBlock = Info.Block;
+            int finalBlock = Info.status.Block;
 
             if (Item)
                 finalBlock += Item.Block;
@@ -69,7 +69,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int AttackDamage { 
         get {
-            int finalDamage = Info.AttackDamage;
+            int finalDamage = Info.status.AttackDamage;
             
             float damageMultiplier = 0f;
 
@@ -87,7 +87,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public float AttackSpeed { 
         get {
-            float finalAttackSpeed = Info.AttackSpeed;
+            float finalAttackSpeed = Info.status.AttackSpeed;
             float attackSpeedMultiplier = 0f;
 
             if (Item)
@@ -95,13 +95,13 @@ public class EntityDecorator : IEntityStatus {
             foreach (IEntityStatus buff in _buffList) {
                 attackSpeedMultiplier += buff.AttackSpeed;
             }
-            finalAttackSpeed += Info.AttackSpeed * attackSpeedMultiplier;
+            finalAttackSpeed += Info.status.AttackSpeed * attackSpeedMultiplier;
             return finalAttackSpeed;
         }
     }
     public int MoveSpeed { 
         get {
-            int finalMoveSpeed = Info.MoveSpeed;
+            int finalMoveSpeed = Info.status.MoveSpeed;
 
             if (Item)
                 finalMoveSpeed += Item.MoveSpeed;
@@ -114,7 +114,7 @@ public class EntityDecorator : IEntityStatus {
 
     public int AttackRange {
         get { 
-            int finalAttackRange = Info.AttackRange;
+            int finalAttackRange = Info.status.AttackRange;
 
             if (Item)
                 finalAttackRange += Item.AttackRange;

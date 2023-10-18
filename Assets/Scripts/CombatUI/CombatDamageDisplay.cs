@@ -62,7 +62,7 @@ public class CombatDamageDisplay : MonoBehaviour, IObserver {
             if (damageInfo.Caster && damageInfo.Caster.CompareTag("Ally")) {
                 if (!_uiElementDictionary.TryGetValue(damageInfo.Caster.ID, out selectedElement)) {
                     selectedElement = _uiElementPool.GetObject();
-                    selectedElement.SetPortrait(damageInfo.Caster.Info.BodySprite);
+                    selectedElement.SetPortrait(damageInfo.Caster.Info.bodySprite);
 
                     _uiElementDictionary.Add(damageInfo.Caster.ID, selectedElement);
                     _sortedUIElementList.Add(selectedElement);
