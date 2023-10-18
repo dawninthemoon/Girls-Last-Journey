@@ -25,9 +25,11 @@ public class CombatMain : MonoBehaviour {
     }
     
     private async UniTaskVoid TargetDetectProgress() {
-        _memberHandler.Progress(_enemyHandler);
-        _enemyHandler.Progress(_memberHandler.Members);
+        while (true) {
+            _memberHandler.Progress(_enemyHandler);
+            _enemyHandler.Progress(_memberHandler.Members);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(_targetDetectionDelay));
+            await UniTask.Delay(TimeSpan.FromSeconds(_targetDetectionDelay));
+        }
     }
 }

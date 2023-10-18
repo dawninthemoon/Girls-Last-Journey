@@ -32,6 +32,8 @@ public class EntityHealthMana {
 
     public void Initialize(EntityDecorator decorator) {
         _entityDecorator = decorator;
+        _currentHealth = _entityDecorator.Health;
+        _currentMana = _entityDecorator.Mana;
     }
 
     public void ReceiveDamage(int finalDamage) {

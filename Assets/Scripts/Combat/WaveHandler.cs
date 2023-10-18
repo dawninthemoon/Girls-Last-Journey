@@ -14,12 +14,17 @@ public class WaveHandler : MonoBehaviour {
     }
     public float NextWaveTime {
         get {
-            if (!_waveTimeCounter.Contains(NextWaveTimerKey)) {
+            if (!IsWaveStarted) {
                 return 0;
             }
             float timeLimit = _waveTimeCounter.GetTimeLimit(NextWaveTimerKey);
             float curr = _waveTimeCounter.GetCurrentTime(NextWaveTimerKey);
             return Mathf.Max(0f, timeLimit - curr);
+        }
+    }
+    public bool IsWaveStarted {
+        get {
+            return _waveTimeCounter.Contains(NextWaveTimerKey);
         }
     }
 
@@ -28,7 +33,7 @@ public class WaveHandler : MonoBehaviour {
     }
 
     private void Update() {
-        if (_waveTimeCounter.Contains(NextWaveTimerKey)) {
+        if (IsWaveStarted) {
             _waveTimeCounter.IncreaseTimer(NextWaveTimerKey, out var limit, GameConfig.GameSpeed);
             if (limit) {
                 StartNewWave();

@@ -7,6 +7,7 @@ using TMPro;
 public class CombatTimerUI : MonoBehaviour {
     [SerializeField] private Canvas _combatUICanvas = null;
     [SerializeField] private Button _timerButton = null;
+    [SerializeField] private WaveHandler _waveHandler;
     private TextMeshProUGUI _timerText;
 
     void Awake() {
@@ -15,8 +16,8 @@ public class CombatTimerUI : MonoBehaviour {
     }
 
     void Update() {
-        //if (_combatScene.IsCombatStarted) {
-        //    _timerText.text = Mathf.Floor(_combatScene.NextWaveTime).ToString();
-        //}
+        if (_waveHandler.IsWaveStarted) {
+            _timerText.text = Mathf.Floor(_waveHandler.NextWaveTime).ToString();
+        }
     }
 }
