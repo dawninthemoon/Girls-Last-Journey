@@ -9,6 +9,7 @@ public class EntityBase : MonoBehaviour {
     private EntityAnimationControl _animationControl;
     private EntityDecorator _entityDecorator;
     private EntityHealthMana _healthManaControl;
+    private EntityUIControl _uiControl;
     private float _currentMorale;
     public EntityInfo Info { get { return _entityDecorator.Info; } }
     public DamageInfo FinalDamageInfo {
@@ -54,7 +55,8 @@ public class EntityBase : MonoBehaviour {
     private void Awake() {
         _agent = GetComponent<Agent>();
         _animationControl = GetComponent<EntityAnimationControl>();
-        _healthManaControl = new EntityHealthMana(GetComponent<EntityUIControl>());
+        _uiControl = GetComponent<EntityUIControl>();
+        _healthManaControl = new EntityHealthMana(_uiControl);
         FinalDamageInfo = new DamageInfo(this);
 
         BuffControl = new EntityBuff(this, _entityDecorator);
@@ -158,6 +160,7 @@ public class EntityBase : MonoBehaviour {
 
     public void EquipItem(EntityItem item) {
         _entityDecorator.Item = item;
+        _uiControl.ShowEquipedItem(item.Sprite);
     }
 
     private void OnEntityDead() {

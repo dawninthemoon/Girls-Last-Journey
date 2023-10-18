@@ -17,8 +17,8 @@ public class CombatReward : MonoBehaviour {
         _itemObjectPool = new ObjectPool<ItemObject>(
             10,
             () => Instantiate(_itemPrefab),
-            null,
-            null
+            (x) => x.gameObject.SetActive(true),
+            (x) => x.gameObject.SetActive(false)
         );
     }
 

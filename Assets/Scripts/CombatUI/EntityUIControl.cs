@@ -6,13 +6,8 @@ using TMPro;
 public class EntityUIControl : MonoBehaviour {
     [SerializeField] private Transform _hpBarTransform = null;
     [SerializeField] private Transform _mpBarTransform = null;
-    [SerializeField] private GameObject _moraleGameObject = null;
+    [SerializeField] private SpriteRenderer _equipedItemRenderer;
     private TMP_Text _moraleText;
-
-    private void Awake() {
-        if (_moraleGameObject)
-            _moraleText = _moraleGameObject.GetComponentInChildren<TMP_Text>();
-    }
 
     public void UpdateHealthBar(int health, int maxHealth) {
         var hpBarScale = _hpBarTransform.localScale;
@@ -29,12 +24,9 @@ public class EntityUIControl : MonoBehaviour {
         _mpBarTransform.localScale = mpBarScale;
     }
 
-    public void SetMoraleUIActive(bool active) {
-        _moraleGameObject?.SetActive(active);
-    }
-
-    public void UpdateMoraleUI(int morale, int maxMorale) {
-        if (_moraleGameObject)
-            _moraleText.text = morale.ToString() + " / " + maxMorale.ToString();
+    public void ShowEquipedItem(Sprite sprite) {
+        if (_equipedItemRenderer) {
+            _equipedItemRenderer.sprite = sprite;
+        }
     }
 }
