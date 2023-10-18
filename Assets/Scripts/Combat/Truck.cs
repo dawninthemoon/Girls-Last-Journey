@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using Cysharp.Threading.Tasks;
 
-public class Truck : EntityBase, ITargetable {
+public class Truck : MonoBehaviour {
     [SerializeField] private float _width = 1f;
     [SerializeField] private float _height = 1f;
     [SerializeField] private float _acceleration = 1.2f;
@@ -28,68 +28,47 @@ public class Truck : EntityBase, ITargetable {
 
     private Vector3 _direction;
     private float _currentSpeed;
-    private int _collisionCount;
     private float _freezeTimeAgo;
-    public bool MoveProgressEnd { get; private set; }
     public static bool IsStunDurationUpgraded;
     public static bool IsDamageUpgraded;
 
     public void StartMove(Vector3 position, Vector3 direction, float angle, System.Action onTruckmoveEnd) {
         transform.eulerAngles = new Vector3(0f, 0f, angle);
         transform.position = position;
-        _collisionCount = 0;
         _acceleration = Mathf.Abs(_acceleration);
         _direction = direction;
         _freezeTimeAgo = 0f;
         
         StopAllCoroutines();
-        StartCoroutine(MoveProgress(direction, onTruckmoveEnd));
+        MoveProgress(direction, onTruckmoveEnd).Forget();
     }
 
-    public void Reset() {
-        MoveProgressEnd = false;
-    }
-
-    private IEnumerator MoveProgress(Vector3 direction, System.Action onTruckmoveEnd) {
+    private async UniTaskVoid MoveProgress(Vector3 direction, System.Action onTruckmoveEnd) {
         float initialSpeed = _currentSpeed = _speed;
         float acc = _acceleration;
         float timeAgo = 0f;
         
-        _freezeTimeAgo -= Time.deltaTime;
-        while (_currentSpeed > 0f) {
+        while (timeAgo < 1.5f) {
             if (_freezeTimeAgo > 0f) {
-                _freezeTimeAgo -= Time.deltaTime;
+                await UniTask.Delay(System.TimeSpan.FromSeconds(_freezeTimeAgo));
+                _freezeTimeAgo = 0f;
             }
-            else {
-                _currentSpeed = initialSpeed + acc * timeAgo;
-                if (_collisionCount > 0) {
-                    acc = -Mathf.Abs(_acceleration * 2f);
-                }
 
-                Vector3 velocity = direction * _currentSpeed;
-                transform.position += velocity * Time.deltaTime;
+            _currentSpeed = initialSpeed + acc * timeAgo;
 
-                timeAgo += Time.deltaTime;
-            }
+            Vector3 velocity = direction * _currentSpeed;
+            transform.position += velocity * Time.deltaTime;
+
+            timeAgo += Time.deltaTime;
             
-            yield return null;
+            await UniTask.Yield();
         }
 
-        MoveProgressEnd = true;
         transform.localRotation = Quaternion.identity;
         onTruckmoveEnd();
     }
 
-    private void Awake() {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D other) {
-        if (MoveProgressEnd) {
-            return;
-        }
-
-        ++_collisionCount;
         if (other.gameObject.tag.Equals("Enemy")) {
             Vector2 direction = (other.transform.position - transform.position).normalized;
             float speed = _currentSpeed > 0f ? _currentSpeed : _speed / 10f;
@@ -109,13 +88,10 @@ public class Truck : EntityBase, ITargetable {
                 stunEffect
             );
         }
-        else if (other.gameObject.tag.Equals("Obstacle")) {
-            _currentSpeed = 0f;
-        }
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (MoveProgressEnd && (other.CompareTag("Enemy") || other.CompareTag("Ally"))) {
+        if (other.CompareTag("Enemy") || other.CompareTag("Ally")) {
             Vector3 direction = (other.transform.position - transform.position).normalized;
             other.transform.position += direction * _knockbackForce * 200f * Time.deltaTime;
         }

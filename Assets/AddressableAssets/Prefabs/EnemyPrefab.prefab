@@ -559,7 +559,7 @@ SpriteRenderer:
   m_Size: {x: 32, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6150959604916958153
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bodyRenderer: {fileID: 5038725929268388063}
-  _knockbackDuration: 2
+  _knockbackDuration: 1
   _friction: 800
 --- !u!1 &7640125064768720678
 GameObject:

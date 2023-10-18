@@ -48,6 +48,14 @@ public class EnemyHandler : MonoBehaviour {
         }
     }
 
+    public EntityBase GetRandomEnemy() {
+        if (_activeEnemies.Count == 0) {
+            return null;
+        }
+        int randomIndex = Random.Range(0, _activeEnemies.Count);
+        return _activeEnemies[randomIndex];
+    }
+
     public void SpawnEnemies(int waveCount, CombatStageConfig stageConfig) {
         Vector2 stageMinSize = CombatMap.StageMinSize;
         Vector2 stageMaxSize = CombatMap.StageMaxSize;

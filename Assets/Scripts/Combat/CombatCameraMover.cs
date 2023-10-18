@@ -17,7 +17,7 @@ public class CombatCameraMover : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        if (_direction.Equals(Vector2.zero) || _target.MoveProgressEnd) {
+        if (_direction.Equals(Vector2.zero)) {
             return;
         }
 

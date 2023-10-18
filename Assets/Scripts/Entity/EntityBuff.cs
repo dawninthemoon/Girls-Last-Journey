@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using Cysharp.Threading.Tasks;
+using System;
 
 public class EntityBuff {
     private MonoBehaviour _executer;
@@ -23,29 +24,29 @@ public class EntityBuff {
     }
 
     public void AddBuffWithDuration(BuffConfig buffConfig) {
-        _executer.StartCoroutine(AddBuff(buffConfig, buffConfig.Info.buffDuration));
+        AddBuff(buffConfig, buffConfig.Info.buffDuration).Forget();
     }
 
     public void StartAddDebuff(DebuffConfig debuffConfig) {
         DebuffInfo info = debuffConfig.Info;
 
         if (info.stun.value) {
-            _executer.StartCoroutine(AddDebuff(nameof(info.stun), info.stun.durtaion));
+            AddDebuff(nameof(info.stun), info.stun.durtaion).Forget();
         }
     }
 
-    private IEnumerator AddBuff(BuffConfig buff, float duration) {
+    private async UniTaskVoid AddBuff(BuffConfig buff, float duration) {
         AddBuff(buff);
 
-        yield return YieldInstructionCache.WaitForSeconds(duration);
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
         RemoveBuff(buff);
     }
 
-    private IEnumerator AddDebuff(string debuffName, float duration) {
+    private async UniTaskVoid AddDebuff(string debuffName, float duration) {
         _currentDebuffSet.Add(debuffName);
 
-        yield return YieldInstructionCache.WaitForSeconds(duration);
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
         _currentDebuffSet.Remove(debuffName);
     }
