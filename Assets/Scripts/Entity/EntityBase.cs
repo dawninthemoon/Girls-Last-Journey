@@ -51,9 +51,11 @@ public class EntityBase : MonoBehaviour {
     public int AttackDamage { get { return _entityDecorator.AttackDamage; } }
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
     public bool CanBehaviour { get; set; } = true;
+    private InteractiveEntity _interactiveControl;
 
     private void Awake() {
         _agent = GetComponent<Agent>();
+        _interactiveControl = GetComponent<InteractiveEntity>();
         _animationControl = GetComponent<EntityAnimationControl>();
         _uiControl = GetComponent<EntityUIControl>();
         _healthManaControl = new EntityHealthMana(_uiControl);
@@ -88,6 +90,23 @@ public class EntityBase : MonoBehaviour {
     private void InitalizeStatus() {
         _healthManaControl.Health = _entityDecorator.Health;
         _healthManaControl.Mana = 0;
+    }
+
+    public void InitializeInteractiveSettings() {
+        _interactiveControl.ClearAllEvents();
+        
+        _interactiveControl.OnMouseDownEvent.AddListener(() => {
+            CanBehaviour = false;
+        });
+
+        _interactiveControl.OnMouseDragEvent.AddListener(() => {
+            Vector2 mousePos = RieslingUtils.ExMouse.GetMouseWorldPosition();
+            transform.position = mousePos;
+        });
+
+        _interactiveControl.OnMouseUpEvent.AddListener(() => {
+            CanBehaviour = true;
+        });
     }
 
     public void SetTarget(ITargetable target) {
@@ -168,7 +187,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if ((other.CompareTag("Enemy") || other.CompareTag("Ally"))) {
+        if ((other.CompareTag(EnemyHandler.EnemyTagName) || other.CompareTag(MemberHandler.MemberTagName))) {
             Vector3 direction = (other.transform.position - transform.position).normalized;
             other.transform.position += direction * 100f * Time.deltaTime;
         }

@@ -12,6 +12,10 @@ public class EntityDecorator : IEntityStatus {
         get;
         set;
     }
+    public int Level {
+        get;
+        set;
+    }
 
     public EntityDecorator(EntityInfo entityInfo) {
         _buffList = new List<BuffConfig>();

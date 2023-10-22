@@ -9,11 +9,12 @@ public class MemberHandler : MonoBehaviour {
     private SynergyHandler _synergyHandler;
     private MemberFactory _memberFactory;
     private EntitySpawner _spawner;
+    private static readonly string MemberPrefabName = "MemberPrefab";
+    public static readonly string MemberTagName = "Ally";
 
     public KdTree<EntityBase> Members {
         get { return _members; }
     }
-    private static readonly string MemberPrefabName = "MemberPrefab";
 
     private void Awake() {
         _memberFactory = GetComponent<MemberFactory>();
@@ -44,7 +45,12 @@ public class MemberHandler : MonoBehaviour {
         for (int i = 0; i < 3; ++i) {
             EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
             EntityBase newEntity = _spawner.CreateEntity(decorator);
-            SetInteractiveSettings(newEntity);
+
+            // TODO: 수정
+            Vector3 moveVector = Vector3.right * i * 100f;
+            newEntity.transform.position += moveVector;
+
+            newEntity.InitializeInteractiveSettings();
             _members.Add(newEntity);
         }
     }
@@ -95,23 +101,5 @@ public class MemberHandler : MonoBehaviour {
                 entity.BuffControl.RemoveBuff(toRemove);
             }
         }
-    }
-
-    private void SetInteractiveSettings(EntityBase baseEntity) {
-        InteractiveEntity interactive = baseEntity.GetComponent<InteractiveEntity>();
-        interactive.ClearAllEvents();
-        
-        interactive.OnMouseDownEvent.AddListener(() => {
-            baseEntity.CanBehaviour = false;
-        });
-
-        interactive.OnMouseDragEvent.AddListener(() => {
-            Vector2 mousePos = ExMouse.GetMouseWorldPosition();
-            baseEntity.transform.position = mousePos;
-        });
-
-        interactive.OnMouseUpEvent.AddListener(() => {
-            baseEntity.CanBehaviour = true;
-        });
     }
 }

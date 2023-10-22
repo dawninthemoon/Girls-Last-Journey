@@ -13,6 +13,7 @@ public class EnemyHandler : MonoBehaviour {
     private EntityBase _enemyPrefab;
     private EntitySpawner _enemySpawner;
     private static readonly string EnemyPrefabName = "EnemyPrefab";
+    public static readonly string EnemyTagName = "Enemy";
 
     private void Awake() {
         _activeEnemies = new KdTree<EntityBase>();

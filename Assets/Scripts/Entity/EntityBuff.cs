@@ -7,10 +7,10 @@ using System;
 public class EntityBuff {
     private MonoBehaviour _executer;
     private EntityDecorator _status;
-    private HashSet<string> _currentDebuffSet;
+    private Dictionary<string, int> _currentDebuffSet;
 
     public EntityBuff(MonoBehaviour executer, EntityDecorator status) {
-        _currentDebuffSet = new HashSet<string>();
+        _currentDebuffSet = new Dictionary<string, int>();
         _executer = executer;
         _status = status;
     }
@@ -44,15 +44,22 @@ public class EntityBuff {
     }
 
     private async UniTaskVoid AddDebuff(string debuffName, float duration) {
-        _currentDebuffSet.Add(debuffName);
+        if (IsDebuffExists(debuffName)) {
+            ++_currentDebuffSet[debuffName];
+        }
+        else {
+            _currentDebuffSet.Add(debuffName, 1);
+        }
 
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
-        _currentDebuffSet.Remove(debuffName);
+        if (IsDebuffExists(debuffName)) {
+            --_currentDebuffSet[debuffName];
+        }
     }
 
     public bool IsDebuffExists(string debuffName) {
-        if (_currentDebuffSet.TryGetValue(debuffName, out string value)) {
+        if (_currentDebuffSet.TryGetValue(debuffName, out int count)) {
             return true;
         }
         return false;

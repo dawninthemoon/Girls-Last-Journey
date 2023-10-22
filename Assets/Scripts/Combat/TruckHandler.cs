@@ -35,6 +35,6 @@ public class TruckHandler : MonoBehaviour {
     }
 
     private void OnTruckMoveEnd() {
-        Debug.Log("Move Ended");
+        
     }
 }

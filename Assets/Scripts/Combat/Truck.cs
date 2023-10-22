@@ -39,7 +39,6 @@ public class Truck : MonoBehaviour {
         _direction = direction;
         _freezeTimeAgo = 0f;
         
-        StopAllCoroutines();
         MoveProgress(direction, onTruckmoveEnd).Forget();
     }
 
