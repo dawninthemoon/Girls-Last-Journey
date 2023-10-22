@@ -1,18 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using UniRx;
+using UniRx.Triggers;
 
 public class TruckHandler : MonoBehaviour {
+    [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private CombatReward _rewardControl;
     [SerializeField] private Truck _truckObject;
+    [SerializeField] private Button _truckSpawnButton;
     private TruckDirectionSelect _truckDirectionSelector;
+    private ReactiveProperty<float> cooldown = new ReactiveProperty<float>(0f);
 
     private void Awake() {
         _truckDirectionSelector = GetComponent<TruckDirectionSelect>();
     }
 
-    public void SpawnTruck(Vector3 targetPosition) {
+    private void Start() {
+        _truckSpawnButton
+            .OnClickAsObservable()
+            .Subscribe(_ => {
+                if (cooldown.Value < Mathf.Epsilon) {
+                    cooldown.Value = 0.5f;
+                    SpawnTruck();
+                }
+            });
+        
+        this.UpdateAsObservable()
+            .Where(_ => cooldown.Value > 0f)
+            .Subscribe(_ => {
+                cooldown.Value -= Time.deltaTime;
+            });
+    }
+
+    private void SpawnTruck() {
+        EntityBase target = _enemyHandler.GetRandomEnemy();
+        if (target != null) {
+            SpawnTruck(target.transform.position);
+        }
+    }
+
+    private void SpawnTruck(Vector3 targetPosition) {
         Vector2 stageMinSize = CombatMap.StageMinSize;
         Vector2 stageMaxSize = CombatMap.StageMaxSize;
 

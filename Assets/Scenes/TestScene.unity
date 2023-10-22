@@ -1205,7 +1205,7 @@ GameObject:
   - component: {fileID: 717839173}
   - component: {fileID: 717839172}
   m_Layer: 5
-  m_Name: TruckButton
+  m_Name: TruckSpawnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1274,19 +1274,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 717839173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1154829296}
-        m_TargetAssemblyTypeName: CombatMain, Assembly-CSharp
-        m_MethodName: SpawnTruck
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &717839173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1987,7 +1975,6 @@ MonoBehaviour:
   _memberHandler: {fileID: 1741768611}
   _enemyHandler: {fileID: 970460263}
   _waveHandler: {fileID: 1154829298}
-  _truckHandler: {fileID: 1392253160}
 --- !u!4 &1154829297
 Transform:
   m_ObjectHideFlags: 0
@@ -2200,8 +2187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08d6e024606deb40a558aaf09d9fa23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyHandler: {fileID: 970460263}
   _rewardControl: {fileID: 1838901616}
   _truckObject: {fileID: 1131159413}
+  _truckSpawnButton: {fileID: 717839172}
 --- !u!4 &1392253161
 Transform:
   m_ObjectHideFlags: 0

@@ -8,7 +8,6 @@ public class CombatMain : MonoBehaviour {
     [SerializeField] private MemberHandler _memberHandler;
     [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private WaveHandler _waveHandler;
-    [SerializeField] private TruckHandler _truckHandler;
 
     private async UniTaskVoid Start() {
         var soundManager = SoundManager.Instance;
@@ -30,13 +29,6 @@ public class CombatMain : MonoBehaviour {
             _enemyHandler.Progress(_memberHandler.Members);
 
             await UniTask.Delay(System.TimeSpan.FromSeconds(_targetDetectionDelay));
-        }
-    }
-
-    public void SpawnTruck() {
-        EntityBase target = _enemyHandler.GetRandomEnemy();
-        if (target != null) {
-            _truckHandler.SpawnTruck(target.transform.position);
         }
     }
 }
