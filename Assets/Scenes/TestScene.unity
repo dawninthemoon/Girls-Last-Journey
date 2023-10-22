@@ -2927,6 +2927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageDisplayer: {fileID: 1552111172}
+  _rewardControl: {fileID: 1838901616}
 --- !u!114 &1741768612
 MonoBehaviour:
   m_ObjectHideFlags: 0

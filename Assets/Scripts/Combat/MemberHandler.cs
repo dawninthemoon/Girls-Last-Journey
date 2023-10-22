@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using UnityEngine.Events;
 
 public class MemberHandler : MonoBehaviour {
     [SerializeField] private CombatDamageDisplay _damageDisplayer;
+    [SerializeField] private CombatReward _rewardControl;
     private KdTree<EntityBase> _members;
     private SynergyHandler _synergyHandler;
     private MemberFactory _memberFactory;
@@ -50,7 +51,7 @@ public class MemberHandler : MonoBehaviour {
             Vector3 moveVector = Vector3.right * i * 100f;
             newEntity.transform.position += moveVector;
 
-            newEntity.InitializeInteractiveSettings();
+            newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
             _members.Add(newEntity);
         }
     }

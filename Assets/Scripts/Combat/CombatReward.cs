@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RieslingUtils;
+using DG.Tweening;
 
 public class CombatReward : MonoBehaviour {
     [SerializeField] private ItemObject _itemPrefab = null;
@@ -35,9 +36,10 @@ public class CombatReward : MonoBehaviour {
         obj.ItemData = item;
         return obj;
     }
-
-    private void OnRewardSelected(ItemObject item, System.Action<EntityItem> onRewardSelected) {
-        item.gameObject.SetActive(false);
-        onRewardSelected?.Invoke(item.ItemData);
+    
+    public void OnItemRelease(Vector3 origin, EntityItem item) {
+        Vector3 targetPosition = origin.ChangeYPos(origin.y + 50f);
+        ItemObject itemObject = CreateItemObject(item, origin);
+        itemObject.transform.DOLocalMoveY(-50f, 0.5f).SetRelative();
     }
 }

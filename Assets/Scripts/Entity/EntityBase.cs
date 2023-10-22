@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
+using RieslingUtils;
 
 public class EntityBase : MonoBehaviour {
     [SerializeField] private Transform _bulletPosition = null;
@@ -52,6 +54,8 @@ public class EntityBase : MonoBehaviour {
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
     public bool CanBehaviour { get; set; } = true;
     private InteractiveEntity _interactiveControl;
+    private int _shakedTime;
+    private bool _wasMouseMovedLeft;
 
     private void Awake() {
         _agent = GetComponent<Agent>();
@@ -92,18 +96,29 @@ public class EntityBase : MonoBehaviour {
         _healthManaControl.Mana = 0;
     }
 
-    public void InitializeInteractiveSettings() {
+    public void InitializeInteractiveSettings(UnityAction<Vector3, EntityItem> onItemRelease) {
         _interactiveControl.ClearAllEvents();
         
         _interactiveControl.OnMouseDownEvent.AddListener(() => {
             CanBehaviour = false;
+            _shakedTime = 0;
+            transform.position = ExMouse.GetMouseWorldPosition();
         });
-
         _interactiveControl.OnMouseDragEvent.AddListener(() => {
-            Vector2 mousePos = RieslingUtils.ExMouse.GetMouseWorldPosition();
-            transform.position = mousePos;
-        });
+            Vector2 curr = ExMouse.GetMouseWorldPosition();
 
+            float diffX = curr.x - transform.position.x;
+            if (((_wasMouseMovedLeft || _shakedTime == 0) && diffX > 0f) 
+                || ((!_wasMouseMovedLeft || _shakedTime == 0) && diffX < 0f)) {
+                    ++_shakedTime;
+                    if (_entityDecorator.Item && (_shakedTime > 4)) {
+                        onItemRelease.Invoke(transform.position, _entityDecorator.Item);
+                        EquipItem(null);
+                    }
+                    _wasMouseMovedLeft = diffX < 0f;
+            }
+            transform.position = curr;
+        });
         _interactiveControl.OnMouseUpEvent.AddListener(() => {
             CanBehaviour = true;
         });
@@ -179,7 +194,7 @@ public class EntityBase : MonoBehaviour {
 
     public void EquipItem(EntityItem item) {
         _entityDecorator.Item = item;
-        _uiControl.ShowEquipedItem(item.Sprite);
+        _uiControl.ShowEquipedItem(item?.Sprite);
     }
 
     private void OnEntityDead() {

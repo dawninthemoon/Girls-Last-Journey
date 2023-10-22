@@ -31,10 +31,10 @@ public class TruckHandler : MonoBehaviour {
     private async UniTaskVoid DropChest() {
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
-        _rewardControl.SpawnRewardAt(transform.position);
+        _rewardControl.SpawnRewardAt(_truckObject.transform.position);
     }
 
     private void OnTruckMoveEnd() {
-        
+
     }
 }
