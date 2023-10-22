@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using RieslingUtils;
+using UniRx;
 
 public class EntityBase : MonoBehaviour {
     [SerializeField] private Transform _bulletPosition = null;
@@ -54,8 +55,9 @@ public class EntityBase : MonoBehaviour {
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
     public bool CanBehaviour { get; set; } = true;
     private InteractiveEntity _interactiveControl;
-    private int _shakedTime;
-    private bool _wasMouseMovedLeft;
+    private Vector3 _prevMousePosition;
+    private int _prevMouseMovedDir;
+    private int _mouseMovedDir;
 
     private void Awake() {
         _agent = GetComponent<Agent>();
@@ -101,27 +103,39 @@ public class EntityBase : MonoBehaviour {
         
         _interactiveControl.OnMouseDownEvent.AddListener(() => {
             CanBehaviour = false;
-            _shakedTime = 0;
-            transform.position = ExMouse.GetMouseWorldPosition();
+            transform.position = _prevMousePosition = ExMouse.GetMouseWorldPosition();
         });
+
+        var entityShakedEvent = new UnityEvent();
         _interactiveControl.OnMouseDragEvent.AddListener(() => {
             Vector2 curr = ExMouse.GetMouseWorldPosition();
-
-            float diffX = curr.x - transform.position.x;
-            if (((_wasMouseMovedLeft || _shakedTime == 0) && diffX > 0f) 
-                || ((!_wasMouseMovedLeft || _shakedTime == 0) && diffX < 0f)) {
-                    ++_shakedTime;
-                    if (_entityDecorator.Item && (_shakedTime > 4)) {
-                        onItemRelease.Invoke(transform.position, _entityDecorator.Item);
-                        EquipItem(null);
-                    }
-                    _wasMouseMovedLeft = diffX < 0f;
+            if (Mathf.Approximately(curr.x - transform.position.x, default(float))) {
+                _mouseMovedDir = 0;
+            }
+            else {
+                _mouseMovedDir = Mathf.RoundToInt(Mathf.Sign(curr.x - transform.position.x));
             }
             transform.position = curr;
+            if ((_mouseMovedDir != 0) && (_prevMouseMovedDir != _mouseMovedDir)) {
+                _prevMouseMovedDir = _mouseMovedDir;
+                entityShakedEvent.Invoke();
+            }
         });
         _interactiveControl.OnMouseUpEvent.AddListener(() => {
             CanBehaviour = true;
         });
+        
+        var stream = entityShakedEvent.AsObservable();
+        stream.Buffer(stream.ThrottleFirst(System.TimeSpan.FromSeconds(0.5)))
+            .Where(x => x.Count > 4)
+            .Subscribe(_ => OnEntityShaked(onItemRelease));
+    }
+
+    private void OnEntityShaked(UnityAction<Vector3, EntityItem> onItemRelease) {
+        if (_entityDecorator.Item) {
+            onItemRelease.Invoke(transform.position, _entityDecorator.Item);
+            EquipItem(null);
+        }
     }
 
     public void SetTarget(ITargetable target) {

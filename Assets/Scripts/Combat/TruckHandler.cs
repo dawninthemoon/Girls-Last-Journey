@@ -12,27 +12,15 @@ public class TruckHandler : MonoBehaviour {
     [SerializeField] private Truck _truckObject;
     [SerializeField] private Button _truckSpawnButton;
     private TruckDirectionSelect _truckDirectionSelector;
-    private ReactiveProperty<float> cooldown = new ReactiveProperty<float>(0f);
 
     private void Awake() {
         _truckDirectionSelector = GetComponent<TruckDirectionSelect>();
     }
 
     private void Start() {
-        _truckSpawnButton
-            .OnClickAsObservable()
-            .Subscribe(_ => {
-                if (cooldown.Value < Mathf.Epsilon) {
-                    cooldown.Value = 0.5f;
-                    SpawnTruck();
-                }
-            });
-        
-        this.UpdateAsObservable()
-            .Where(_ => cooldown.Value > 0f)
-            .Subscribe(_ => {
-                cooldown.Value -= Time.deltaTime;
-            });
+        var stream = _truckSpawnButton.OnClickAsObservable();
+        stream.Buffer(stream.ThrottleFirst(System.TimeSpan.FromSeconds(0.5)))
+            .Subscribe(_ => SpawnTruck());
     }
 
     private void SpawnTruck() {
