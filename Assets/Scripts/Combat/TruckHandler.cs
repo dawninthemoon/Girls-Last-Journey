@@ -68,10 +68,10 @@ public class TruckHandler : MonoBehaviour {
             _memberHandler.SpawnMember(truckPosition);
         }
         else if (!_memberHandler.DoesEveryoneHaveItems()) {
-            _rewardControl.SpawnRewardAt(truckPosition);
+            _rewardControl.SpawnItemRewardAt(truckPosition);
         }
         else {
-            // 상자 드롭
+            _rewardControl.SpawnChestAt(truckPosition);
         }
     }
 

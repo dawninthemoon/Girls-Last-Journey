@@ -8,7 +8,7 @@ public class EntityDecorator : IEntityStatus {
         get;
         private set;
     }
-    public EntityItem Item {
+    public ItemData Item {
         get;
         set;
     }

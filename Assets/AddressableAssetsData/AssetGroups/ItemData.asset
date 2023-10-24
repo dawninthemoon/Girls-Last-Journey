@@ -10,18 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: EntityItems
+  m_Name: ItemData
   m_EditorClassIdentifier: 
-  m_GroupName: EntityItems
+  m_GroupName: ItemData
   m_Data:
     m_SerializedData: []
   m_GUID: a295bfe872e80e247a71c7c83834c841
   m_SerializeEntries:
   - m_GUID: 1c45aa2c4459021498d7ccc885cb65b5
-    m_Address: EntityItems
+    m_Address: ItemData
     m_ReadOnly: 0
     m_SerializedLabels:
-    - EntityItems
+    - ItemData
+  - m_GUID: 6a80c817b9b9336488497d7c6b0caa82
+    m_Address: ItemStuff
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d855ca502181e4d4daeea0b4f5b20c97
+    m_Address: Chest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemData
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
   m_SchemaSet:

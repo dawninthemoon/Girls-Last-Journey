@@ -2006,7 +2006,6 @@ MonoBehaviour:
   - {fileID: 652758016}
   - {fileID: 405575739}
   - {fileID: 668608919}
-  _truckObject: {fileID: 0}
 --- !u!114 &1392253160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,6 +2919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 7336425143985298857, guid: e20b3210a951de6419632eb479395f6e, type: 3}
+  _chestPrefab: {fileID: 7945479852802209055, guid: 74a7842d9c6d90046b6a270985230beb, type: 3}
 --- !u!1 &1860405769
 GameObject:
   m_ObjectHideFlags: 0

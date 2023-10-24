@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/EntityItem", fileName = "NewEntityItem")]
-public class EntityItem : ScriptableObject, IEntityStatus {
+[CreateAssetMenu(menuName = "ScriptableObjects/ItemData", fileName = "NewItemData")]
+public class ItemData : ScriptableObject, IEntityStatus {
     [SerializeField] private Sprite _sprite = null;
 
     [SerializeField] private int _health = 0;

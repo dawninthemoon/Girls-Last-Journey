@@ -101,7 +101,7 @@ public class EntityBase : MonoBehaviour {
         _healthManaControl.Mana = 0;
     }
 
-    public void InitializeInteractiveSettings(UnityAction<Vector3, EntityItem> onItemRelease) {
+    public void InitializeInteractiveSettings(UnityAction<Vector3, ItemData> onItemRelease) {
         _interactiveControl.ClearAllEvents();
         
         _interactiveControl.OnMouseDownEvent.AddListener(() => {
@@ -134,7 +134,7 @@ public class EntityBase : MonoBehaviour {
             .Subscribe(_ => OnEntityShaked(onItemRelease));
     }
 
-    private void OnEntityShaked(UnityAction<Vector3, EntityItem> onItemRelease) {
+    private void OnEntityShaked(UnityAction<Vector3, ItemData> onItemRelease) {
         if (_entityDecorator.Item) {
             onItemRelease.Invoke(transform.position, _entityDecorator.Item);
             EquipItem(null);
@@ -209,7 +209,7 @@ public class EntityBase : MonoBehaviour {
         }
     }
 
-    public void EquipItem(EntityItem item) {
+    public void EquipItem(ItemData item) {
         _entityDecorator.Item = item;
         _uiControl.ShowEquipedItem(item?.Sprite);
     }
