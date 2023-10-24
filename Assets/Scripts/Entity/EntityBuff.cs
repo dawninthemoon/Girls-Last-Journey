@@ -59,9 +59,12 @@ public class EntityBuff {
     }
 
     public bool IsDebuffExists(string debuffName) {
-        if (_currentDebuffSet.TryGetValue(debuffName, out int count)) {
-            return true;
+        bool result = false;
+        if (_currentDebuffSet.TryGetValue(debuffName, out int debuffCount)) {
+            if (debuffCount > 0) {
+                result = true;
+            }
         }
-        return false;
+        return result;
     }
 }

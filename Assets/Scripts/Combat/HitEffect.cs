@@ -22,12 +22,12 @@ public class HitEffect : MonoBehaviour {
     private async UniTaskVoid ApplyHitEffect(Vector2 direction, float force, int damage, float freezeDuration, DebuffConfig debuff) {
         _bodyRenderer.material.SetFloat(FlashAmountKey, 1f);
 
+        _entityBase.ReceiveDamage(damage);
+        _entityBase.BuffControl.StartAddDebuff(debuff);
+
         await UniTask.Delay(System.TimeSpan.FromSeconds(freezeDuration));
 
         _bodyRenderer.material.SetFloat(FlashAmountKey, 0f);
-
-        _entityBase.ReceiveDamage(damage);
-        _entityBase.BuffControl.StartAddDebuff(debuff);
 
         float timeAgo = 0f;
         while (timeAgo < _knockbackDuration) {

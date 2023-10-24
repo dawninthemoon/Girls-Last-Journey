@@ -52,7 +52,7 @@ MonoBehaviour:
   _acceleration: 120
   _speed: 500
   _knockbackForce: 1.25
-  _knockbackMin: 300
+  _knockbackMin: 100
   _knockbackDamage: 30
   _upgradedKnockbackDamage: 70
   _freezeDuration: 0.08
