@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UniRx;
 
 public class WaveHandler : MonoBehaviour {
     [SerializeField] private float _waveTimeLimit = 30f;
+    [SerializeField] private Button _waveTimerButton;
     [SerializeField] private EnemyHandler _enemyHandler;
     private ExTimeCounter _waveTimeCounter;
     private EntitySpawner _enemySpawner;
@@ -30,6 +33,12 @@ public class WaveHandler : MonoBehaviour {
 
     private void Awake() {
         _waveTimeCounter = new ExTimeCounter();
+    }
+
+    private void Start() {
+        var stream = _waveTimerButton.OnClickAsObservable();
+        stream.Buffer(stream.ThrottleFirst(System.TimeSpan.FromSeconds(0.5)))
+            .Subscribe(_ => StartNewWave());
     }
 
     private void Update() {
