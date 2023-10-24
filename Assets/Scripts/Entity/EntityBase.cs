@@ -57,14 +57,15 @@ public class EntityBase : MonoBehaviour {
     public int AttackDamage { get { return _entityDecorator.AttackDamage; } }
     public Vector3 BulletPosition { get { return _bulletPosition.position; } }
     public bool CanBehaviour { get; set; } = true;
-    private InteractiveEntity _interactiveControl;
+    private int _exp;
+    private InteractiveEntity _interactiveSetting;
     private Vector3 _prevMousePosition;
     private int _prevMouseMovedDir;
     private int _mouseMovedDir;
 
     private void Awake() {
         _agent = GetComponent<Agent>();
-        _interactiveControl = GetComponent<InteractiveEntity>();
+        _interactiveSetting = GetComponent<InteractiveEntity>();
         _animationControl = GetComponent<EntityAnimationControl>();
         _uiControl = GetComponent<EntityUIControl>();
         _healthManaControl = new EntityHealthMana(_uiControl);
@@ -102,15 +103,15 @@ public class EntityBase : MonoBehaviour {
     }
 
     public void InitializeInteractiveSettings(UnityAction<Vector3, ItemData> onItemRelease) {
-        _interactiveControl.ClearAllEvents();
+        _interactiveSetting.ClearAllEvents();
         
-        _interactiveControl.OnMouseDownEvent.AddListener(() => {
+        _interactiveSetting.OnMouseDownEvent.AddListener(() => {
             CanBehaviour = false;
             transform.position = _prevMousePosition = ExMouse.GetMouseWorldPosition();
         });
 
         var entityShakedEvent = new UnityEvent();
-        _interactiveControl.OnMouseDragEvent.AddListener(() => {
+        _interactiveSetting.OnMouseDragEvent.AddListener(() => {
             Vector2 curr = ExMouse.GetMouseWorldPosition();
             if (Mathf.Approximately(curr.x - transform.position.x, default(float))) {
                 _mouseMovedDir = 0;
@@ -124,7 +125,7 @@ public class EntityBase : MonoBehaviour {
                 entityShakedEvent.Invoke();
             }
         });
-        _interactiveControl.OnMouseUpEvent.AddListener(() => {
+        _interactiveSetting.OnMouseUpEvent.AddListener(() => {
             CanBehaviour = true;
         });
         
@@ -206,6 +207,15 @@ public class EntityBase : MonoBehaviour {
 
         if (Health <= 0) {
            OnEntityDead();
+        }
+    }
+
+    public void GainExp(int amount) {
+        int requireExp = 180 + _entityDecorator.Level * 100;
+        _exp += amount;
+        if (_exp >= requireExp) {
+            _exp -= requireExp;
+            ++_entityDecorator.Level;
         }
     }
 

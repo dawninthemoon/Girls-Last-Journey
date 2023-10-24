@@ -8,6 +8,7 @@ public class CombatMain : MonoBehaviour {
     [SerializeField] private MemberHandler _memberHandler;
     [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private WaveHandler _waveHandler;
+    [SerializeField] private CombatReward _rewardControl;
 
     private async UniTaskVoid Start() {
         var soundManager = SoundManager.Instance;
@@ -26,9 +27,16 @@ public class CombatMain : MonoBehaviour {
     private async UniTaskVoid TargetDetectProgress() {
         while (gameObject.activeSelf) {
             _memberHandler.Progress(_enemyHandler);
-            _enemyHandler.Progress(_memberHandler.Members);
+            _enemyHandler.Progress(_memberHandler.Members, OnEnemyDead);
 
             await UniTask.Delay(System.TimeSpan.FromSeconds(_targetDetectionDelay));
         }
+    }
+
+    private void OnEnemyDead(Vector3 lastPosition) {
+        if (Random.Range(0, 10) < 1) {
+            _rewardControl.SpawnStuffRewardAt(lastPosition);
+        }
+        _memberHandler.GainExpToMembers(30);
     }
 }

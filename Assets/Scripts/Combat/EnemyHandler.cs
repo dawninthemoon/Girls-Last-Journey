@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 
@@ -34,7 +35,7 @@ public class EnemyHandler : MonoBehaviour {
         });
     }
 
-    public void Progress(KdTree<EntityBase> allies) {
+    public void Progress(KdTree<EntityBase> allies, UnityAction<Vector3> onEnemyDead) {
         foreach (EntityBase enemy in _activeEnemies) {
             EntityBase targetEntity = allies.FindClosest(enemy.transform.position);
             ITargetable target = targetEntity?.GetComponent<Agent>();
@@ -44,7 +45,9 @@ public class EnemyHandler : MonoBehaviour {
         for (int i = 0; i < _activeEnemies.Count; ++i) {
             var enemy = _activeEnemies[i];
             if (enemy.Health <= 0 || !enemy.gameObject.activeSelf) {
+                onEnemyDead.Invoke(enemy.transform.position);
                 _activeEnemies.RemoveAt(i--);
+                _enemySpawner.RemoveEntity(enemy);
             }
         }
     }

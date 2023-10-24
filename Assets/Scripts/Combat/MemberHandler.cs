@@ -54,6 +54,13 @@ public class MemberHandler : MonoBehaviour {
         _members.Add(newEntity);
     }
 
+    public void GainExpToMembers(int totalExpAmount) {
+        int amount = totalExpAmount / Members.Count;
+        foreach (EntityBase member in Members) {
+            member.GainExp(amount);
+        }
+    }
+
     public void OnEntityActive(EntityBase entity) {
         entity.gameObject.SetActive(true);
         _members.Add(entity); 
