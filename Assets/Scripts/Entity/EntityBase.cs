@@ -49,6 +49,9 @@ public class EntityBase : MonoBehaviour {
     public SynergyType ExtraSynergy {
         get { return _entityDecorator.ExtraSynergy; }
     }
+    public bool HasItem {
+        get { return _entityDecorator.Item; }
+    }
 
     public Vector2 HandDirection { get; private set; }
     public int AttackDamage { get { return _entityDecorator.AttackDamage; } }

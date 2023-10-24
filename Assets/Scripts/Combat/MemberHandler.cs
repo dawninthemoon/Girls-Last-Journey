@@ -12,6 +12,9 @@ public class MemberHandler : MonoBehaviour {
     private EntitySpawner _spawner;
     private static readonly string MemberPrefabName = "MemberPrefab";
     public static readonly string MemberTagName = "Ally";
+    public int NumOfMembers {
+        get { return _members.Count; }
+    }
 
     public KdTree<EntityBase> Members {
         get { return _members; }
@@ -42,18 +45,13 @@ public class MemberHandler : MonoBehaviour {
         }
     }
 
-    public void InitalizeMember() {
-        for (int i = 0; i < 3; ++i) {
-            EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
-            EntityBase newEntity = _spawner.CreateEntity(decorator);
+    public void SpawnMember(Vector3 position) {
+        EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
+        EntityBase newEntity = _spawner.CreateEntity(decorator);
+        newEntity.transform.position = position;
 
-            // TODO: 수정
-            Vector3 moveVector = Vector3.right * i * 100f;
-            newEntity.transform.position += moveVector;
-
-            newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
-            _members.Add(newEntity);
-        }
+        newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
+        _members.Add(newEntity);
     }
 
     public void OnEntityActive(EntityBase entity) {
@@ -102,5 +100,16 @@ public class MemberHandler : MonoBehaviour {
                 entity.BuffControl.RemoveBuff(toRemove);
             }
         }
+    }
+
+    public bool DoesEveryoneHaveItems() {
+        bool result = true;
+        foreach (EntityBase entity in _members) {
+            if (!entity.HasItem) {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 }

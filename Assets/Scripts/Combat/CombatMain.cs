@@ -18,7 +18,7 @@ public class CombatMain : MonoBehaviour {
 
         CombatMap.SetMapView(Vector2.zero);
 
-        _memberHandler.InitalizeMember();
+        _memberHandler.SpawnMember(Vector3.zero);
         _waveHandler.StartNewWave();
         TargetDetectProgress().Forget();
     }

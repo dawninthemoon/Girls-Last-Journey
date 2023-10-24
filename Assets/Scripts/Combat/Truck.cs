@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 
 public class Truck : MonoBehaviour {
@@ -32,7 +33,7 @@ public class Truck : MonoBehaviour {
     public static bool IsStunDurationUpgraded;
     public static bool IsDamageUpgraded;
 
-    public void StartMove(Vector3 position, Vector3 direction, float angle, System.Action onTruckmoveEnd) {
+    public void StartMove(Vector3 position, Vector3 direction, float angle, UnityAction<Truck> onTruckmoveEnd) {
         transform.eulerAngles = new Vector3(0f, 0f, angle);
         transform.position = position;
         _acceleration = Mathf.Abs(_acceleration);
@@ -42,7 +43,7 @@ public class Truck : MonoBehaviour {
         MoveProgress(direction, onTruckmoveEnd).Forget();
     }
 
-    private async UniTaskVoid MoveProgress(Vector3 direction, System.Action onTruckmoveEnd) {
+    private async UniTaskVoid MoveProgress(Vector3 direction, UnityAction<Truck> onTruckmoveEnd) {
         float initialSpeed = _currentSpeed = _speed;
         float acc = _acceleration;
         float timeAgo = 0f;
@@ -64,7 +65,7 @@ public class Truck : MonoBehaviour {
         }
 
         transform.localRotation = Quaternion.identity;
-        onTruckmoveEnd();
+        onTruckmoveEnd.Invoke(this);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

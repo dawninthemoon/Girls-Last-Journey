@@ -7,14 +7,23 @@ using UniRx;
 using UniRx.Triggers;
 
 public class TruckHandler : MonoBehaviour {
+    [SerializeField] private MemberHandler _memberHandler;
     [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private CombatReward _rewardControl;
-    [SerializeField] private Truck _truckObject;
+    [SerializeField] private Truck _truckPrefab;
     [SerializeField] private Button _truckSpawnButton;
     private TruckDirectionSelect _truckDirectionSelector;
+    private ObjectPool<Truck> _truckObjectPool;
 
     private void Awake() {
         _truckDirectionSelector = GetComponent<TruckDirectionSelect>();
+
+        _truckObjectPool = new ObjectPool<Truck>(
+            5,
+            () => Instantiate(_truckPrefab),
+            (x) => x.gameObject.SetActive(true),
+            (x) => x.gameObject.SetActive(false)
+        );
     }
 
     private void Start() {
@@ -38,21 +47,35 @@ public class TruckHandler : MonoBehaviour {
         float randY = Random.Range(0, 2) > 0 ? stageMaxSize.y : stageMinSize.y;
         Vector2 start = new Vector2(randX, randY);
 
-        Vector2 startPosition = _truckDirectionSelector.GetStartPoint(start, targetPosition);
-        var config = _truckDirectionSelector.GetTruckMoveConfig(start, targetPosition);
+        var truckObject = _truckObjectPool.GetObject();
 
-        _truckObject.StartMove(config.Item1, config.Item2, config.Item3, OnTruckMoveEnd);
+        Vector2 startPosition 
+            = _truckDirectionSelector.GetStartPoint(truckObject, start, targetPosition);
+        var config 
+            = _truckDirectionSelector.GetTruckMoveConfig(truckObject, start, targetPosition);
 
-        DropChest().Forget();
+        truckObject.StartMove(config.Item1, config.Item2, config.Item3, OnTruckMoveEnd);
+
+        DropReward(truckObject).Forget();
     }
 
-    private async UniTaskVoid DropChest() {
+    private async UniTaskVoid DropReward(Truck truckObject) {
         await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
-        _rewardControl.SpawnRewardAt(_truckObject.transform.position);
+        Vector3 truckPosition = truckObject.transform.position;
+
+        if (_memberHandler.NumOfMembers < 3) {
+            _memberHandler.SpawnMember(truckPosition);
+        }
+        else if (!_memberHandler.DoesEveryoneHaveItems()) {
+            _rewardControl.SpawnRewardAt(truckPosition);
+        }
+        else {
+            // 상자 드롭
+        }
     }
 
-    private void OnTruckMoveEnd() {
-
+    private void OnTruckMoveEnd(Truck truckObject) {
+        _truckObjectPool.ReturnObject(truckObject);
     }
 }
