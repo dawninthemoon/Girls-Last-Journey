@@ -26,11 +26,11 @@ public class ItemObject : MonoBehaviour {
         });
 
         Interactive.OnMouseUpEvent.AddListener(() => {
-            var collider = GetOverlapedWithMouse("EncounterEntity");
-            var collector = collider.GetComponent<EntityCollector>();
-            if (collector) {
+            var collider = GetOverlapedWithMouse(EncounterHandler.EncountersLabel);
+            if (collider != null) {
+                var collector = collider.GetComponent<EntityCollector>();
                 itemPool.ReturnObject(this);
-                collector.OnItemSold();
+                collector.OnInteraction();
             }
         });
 
@@ -46,7 +46,7 @@ public class ItemObject : MonoBehaviour {
         }
 
         Collider2D GetOverlapedWithMouse(string layerName) {
-            int layerMask = LayerMask.NameToLayer(MemberHandler.MemberTagName);
+            int layerMask = LayerMask.NameToLayer(layerName);
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 100f, (1 << layerMask));
             return hit.collider;

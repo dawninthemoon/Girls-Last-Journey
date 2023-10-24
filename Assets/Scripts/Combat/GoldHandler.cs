@@ -13,6 +13,10 @@ public class GoldHandler : MonoBehaviour {
         CurrentGold = _initialGold;
     }
 
+    public void GainGold(int amount) {
+        CurrentGold += amount;
+    }
+
     public bool TryPayGold(int amount) {
         bool result = false;
         if (CurrentGold >= amount) {

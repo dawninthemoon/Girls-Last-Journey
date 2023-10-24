@@ -6,8 +6,9 @@ using RieslingUtils;
 using DG.Tweening;
 
 public class CombatReward : MonoBehaviour {
-    [SerializeField] private ItemObject _itemPrefab = null;
-    [SerializeField] private ChestObject _chestPrefab = null;
+    [SerializeField] private GoldHandler _goldHandler;
+    [SerializeField] private ItemObject _itemPrefab;
+    [SerializeField] private ChestObject _chestPrefab;
     private List<ItemData> _itemDataList;
     private List<ChestData> _chestDataList;
     private ItemData _stuffData;
@@ -88,6 +89,8 @@ public class CombatReward : MonoBehaviour {
             onChestClicked = () => {
                 SpawnItemRewardAt(chestPosition);
                 SpawnStuffRewardAt(chestPosition);
+                int amount = 40;
+                _goldHandler.GainGold(amount);
             };
             break;
         case ChestData.Type.Desert:

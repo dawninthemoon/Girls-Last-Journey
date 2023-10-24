@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityCollector : MonoBehaviour {
-    [SerializeField] private int _moveSpeed;
+public class EntityCollector : EncounterEntityBase {
     private bool _isEntrance;
-    private UnityAction _onItemSold;
 
     private void Awake() {
 
@@ -16,11 +14,7 @@ public class EntityCollector : MonoBehaviour {
         
     }
 
-    public void Initialize(UnityAction onItemSold) {
-
-    }
-    
-    private void Update() {
+    public override void Progress() {
         Move();
     }
 
@@ -29,9 +23,5 @@ public class EntityCollector : MonoBehaviour {
 
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * _moveSpeed * Time.deltaTime;
-    }
-
-    public void OnItemSold() {
-        _onItemSold.Invoke();
     }
 }

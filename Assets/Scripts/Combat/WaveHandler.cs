@@ -8,6 +8,7 @@ public class WaveHandler : MonoBehaviour {
     [SerializeField] private float _waveTimeLimit = 30f;
     [SerializeField] private Button _waveTimerButton;
     [SerializeField] private EnemyHandler _enemyHandler;
+    [SerializeField] private EncounterHandler _encounterHandler;
     private ExTimeCounter _waveTimeCounter;
     private EntitySpawner _enemySpawner;
     private static readonly string NextWaveTimerKey = "NextWaveTime";
@@ -54,5 +55,9 @@ public class WaveHandler : MonoBehaviour {
         ++CurrentWave;
         _waveTimeCounter.InitTimer(NextWaveTimerKey, 0f, _waveTimeLimit);
         _enemyHandler.SpawnEnemies(CurrentWave, null);
+
+        if (CurrentWave % 5 == 0) {
+            _encounterHandler.SpawnRandomEncounter();
+        }
     }
 }
