@@ -6,4 +6,5 @@ public interface IEntityStatus {
     float AttackSpeed { get; }
     int MoveSpeed { get; }
     int AttackRange { get; }
+    int HealthRegen { get; }
 }

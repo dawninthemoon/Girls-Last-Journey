@@ -92,6 +92,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void Update() {
+        _healthManaControl.Progress();
         if (BuffControl != null) {
             CanBehaviour = !BuffControl.IsDebuffExists("stun");
         }

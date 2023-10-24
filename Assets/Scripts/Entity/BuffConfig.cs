@@ -15,6 +15,7 @@ public struct BuffInfo {
     [Tooltip("Applied by Percent")] public float attackSpeed;
     public int moveSpeed;
     public int attackRange;
+    public int healthRegen;
     [Tooltip("Applied by Percent")] public float aimingEfficiency;
 }
 
@@ -34,5 +35,6 @@ public class BuffConfig : ScriptableObject, IEntityStatus {
     public float AttackSpeed { get { return _buffInfo.attackSpeed; } }
     public int MoveSpeed { get { return _buffInfo.moveSpeed; } }
     public int AttackRange { get { return _buffInfo.attackRange; } }
+    public int HealthRegen { get { return _buffInfo.healthRegen; } }
     public float AimingEfficiency { get { return _buffInfo.aimingEfficiency; } }
 }

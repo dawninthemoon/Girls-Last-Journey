@@ -19,3 +19,4 @@ MonoBehaviour:
   _attackSpeed: 1
   _moveSpeed: 40
   _attackRange: 130
+  _healthRegen: 1

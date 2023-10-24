@@ -36,6 +36,10 @@ public class EntityHealthMana {
         _currentMana = _entityDecorator.Mana;
     }
 
+    public void Progress() {
+        Health = Mathf.Min(_currentHealth + _entityDecorator.HealthRegen, _entityDecorator.Health);
+    }
+
     public void ReceiveDamage(int finalDamage) {
         ReduceHealth(finalDamage);
     }

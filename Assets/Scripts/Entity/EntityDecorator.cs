@@ -129,6 +129,12 @@ public class EntityDecorator : IEntityStatus {
         }
     }
 
+    public int HealthRegen {
+        get { 
+            return Info.status.HealthRegen;
+        }
+    }
+
     public float AimingEfficiency {
         get { 
             float finalAiming = 0f;

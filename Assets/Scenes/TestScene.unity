@@ -1545,7 +1545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0353d5e70466445a3e12187769d190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rewardControl: {fileID: 1838901616}
   _damageDisplayer: {fileID: 1552111172}
 --- !u!4 &970460264
 Transform:
@@ -1819,6 +1818,7 @@ MonoBehaviour:
   _memberHandler: {fileID: 1741768611}
   _enemyHandler: {fileID: 970460263}
   _waveHandler: {fileID: 1154829298}
+  _rewardControl: {fileID: 1838901616}
 --- !u!4 &1154829297
 Transform:
   m_ObjectHideFlags: 0

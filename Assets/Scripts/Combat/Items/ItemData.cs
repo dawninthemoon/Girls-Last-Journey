@@ -6,13 +6,14 @@ using UnityEngine;
 public class ItemData : ScriptableObject, IEntityStatus {
     [SerializeField] private Sprite _sprite = null;
 
-    [SerializeField] private int _health = 0;
-    [SerializeField] private int _mana = 0;
-    [SerializeField] private int _block = 0;
-    [SerializeField] private int _attackDamage = 0;
-    [SerializeField] private float _attackSpeed = 0f;
-    [SerializeField] private int _moveSpeed = 0;
-    [SerializeField] private int _attackRange = 0;
+    [SerializeField] private int _health;
+    [SerializeField] private int _mana;
+    [SerializeField] private int _block;
+    [SerializeField] private int _attackDamage;
+    [SerializeField] private float _attackSpeed;
+    [SerializeField] private int _moveSpeed;
+    [SerializeField] private int _attackRange;
+    [SerializeField] private int _healthRegen;
     [SerializeField] private SynergyType _extraSynergy = SynergyType.None;
     
     public int Health { get { return _health; } }
@@ -22,6 +23,7 @@ public class ItemData : ScriptableObject, IEntityStatus {
     public float AttackSpeed { get { return _attackSpeed; } }
     public int MoveSpeed { get { return _moveSpeed; } }
     public int AttackRange { get { return _attackRange; } }
+    public int HealthRegen { get { return _healthRegen; } }
     public SynergyType ExtraSynergy { get { return _extraSynergy; } }
 
     public Sprite Sprite { get { return _sprite; } }
