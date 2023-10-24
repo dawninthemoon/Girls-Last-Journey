@@ -109,7 +109,7 @@ public class MemberHandler : MonoBehaviour {
         }
     }
 
-    public bool DoesEveryoneHaveItems() {
+    public bool DoesEveryoneHasItem() {
         bool result = true;
         foreach (EntityBase entity in _members) {
             if (!entity.HasItem) {

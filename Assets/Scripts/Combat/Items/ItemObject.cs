@@ -24,18 +24,32 @@ public class ItemObject : MonoBehaviour {
             Vector2 mousePos = ExMouse.GetMouseWorldPosition();
             transform.position = mousePos;
         });
-        if (canEquip) {
-            Interactive.OnMouseExitEvent.AddListener(() => {
-                int layerMask = LayerMask.NameToLayer(MemberHandler.MemberTagName);
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                var hit = Physics2D.GetRayIntersection(ray, 100f, (1 << layerMask));
-                if (hit.collider != null) {
-                    EntityBase entity = hit.collider.GetComponent<EntityBase>();
-                    entity.EquipItem(ItemData);
 
+        Interactive.OnMouseUpEvent.AddListener(() => {
+            var collider = GetOverlapedWithMouse("EncounterEntity");
+            var collector = collider.GetComponent<EntityCollector>();
+            if (collector) {
+                itemPool.ReturnObject(this);
+                collector.OnItemSold();
+            }
+        });
+
+        if (canEquip) {
+            Interactive.OnMouseUpEvent.AddListener(() => {
+                var collider = GetOverlapedWithMouse(MemberHandler.MemberTagName);
+                if (collider != null) {
+                    EntityBase entity = collider.GetComponent<EntityBase>();
+                    entity.EquipItem(ItemData);
                     itemPool.ReturnObject(this);
                 }
             });
+        }
+
+        Collider2D GetOverlapedWithMouse(string layerName) {
+            int layerMask = LayerMask.NameToLayer(MemberHandler.MemberTagName);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 100f, (1 << layerMask));
+            return hit.collider;
         }
     }
 }

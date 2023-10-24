@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using UniRx;
-using UniRx.Triggers;
 
 public class TruckHandler : MonoBehaviour {
+    [SerializeField] private int _truckSpawnCost;
     [SerializeField] private MemberHandler _memberHandler;
     [SerializeField] private EnemyHandler _enemyHandler;
+    [SerializeField] private GoldHandler _goldHandler;
     [SerializeField] private CombatReward _rewardControl;
     [SerializeField] private Truck _truckPrefab;
     [SerializeField] private Button _truckSpawnButton;
@@ -33,9 +34,11 @@ public class TruckHandler : MonoBehaviour {
     }
 
     private void SpawnTruck() {
-        EntityBase target = _enemyHandler.GetRandomEnemy();
-        if (target != null) {
-            SpawnTruck(target.transform.position);
+        if (_goldHandler.TryPayGold(_truckSpawnCost)) {
+            EntityBase target = _enemyHandler.GetRandomEnemy();
+            if (target != null) {
+                SpawnTruck(target.transform.position);
+            }
         }
     }
 
@@ -67,7 +70,7 @@ public class TruckHandler : MonoBehaviour {
         if (_memberHandler.NumOfMembers < 3) {
             _memberHandler.SpawnMember(truckPosition);
         }
-        else if (!_memberHandler.DoesEveryoneHaveItems()) {
+        else if (!_memberHandler.DoesEveryoneHasItem()) {
             _rewardControl.SpawnItemRewardAt(truckPosition);
         }
         else {
