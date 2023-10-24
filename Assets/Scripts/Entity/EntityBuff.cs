@@ -53,7 +53,7 @@ public class EntityBuff {
 
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
-        if (IsDebuffExists(debuffName)) {
+        if (_currentDebuffSet.TryGetValue(debuffName, out int debuffCount)) {
             --_currentDebuffSet[debuffName];
         }
     }

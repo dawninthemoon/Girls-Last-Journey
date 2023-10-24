@@ -53,10 +53,11 @@ public class CombatReward : MonoBehaviour {
         SpawnRewardAt(_stuffData, position, false);
     }
 
-    private void SpawnRewardAt(ItemData item, Vector3 position, bool canEquip) {
+    private ItemObject SpawnRewardAt(ItemData item, Vector3 position, bool canEquip) {
         ItemObject obj = CreateItemObject(item, position);
         obj.SetInteraction(_itemObjectPool, canEquip);
         obj.SetSprite(item.Sprite);
+        return obj;
     }
 
     private ItemObject CreateItemObject(ItemData item, Vector3 position) {
@@ -68,7 +69,7 @@ public class CombatReward : MonoBehaviour {
     
     public void OnItemRelease(Vector3 origin, ItemData item) {
         Vector3 targetPosition = origin.ChangeYPos(origin.y + 50f);
-        ItemObject itemObject = CreateItemObject(item, origin);
+        ItemObject itemObject = SpawnRewardAt(item, origin, true);
         itemObject.transform.DOLocalMoveY(-50f, 0.5f).SetRelative();
     }
 
