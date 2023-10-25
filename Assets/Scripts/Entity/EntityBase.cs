@@ -136,6 +136,21 @@ public class EntityBase : MonoBehaviour {
             .Subscribe(_ => OnEntityShaked(onItemRelease));
     }
 
+    public void InitializeEncounterSettings(UnityAction<EntityBase> onEntitySold) {
+        _interactiveSetting.OnMouseUpEvent.AddListener(() => {
+            var collider = ExMouse.GetOverlapedCollider(EncounterHandler.EncountersLabel);
+            if (collider != null) {
+                var encounter = collider.GetComponent<InteractiveEncounter>();
+                if (encounter.EncounterType.Equals(EncounterEntityBase.Type.Vampire)) {
+                    ReceiveDamage(50);
+                }
+                else if (encounter.EncounterType.Equals(EncounterEntityBase.Type.HumanTrafficker)) {
+                    onEntitySold.Invoke(this);
+                }
+            }
+        });
+    }
+
     private void OnEntityShaked(UnityAction<Vector3, ItemData> onItemRelease) {
         if (_entityDecorator.Item) {
             onItemRelease.Invoke(transform.position, _entityDecorator.Item);

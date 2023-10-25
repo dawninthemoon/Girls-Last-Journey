@@ -57,6 +57,9 @@ public class WaveHandler : MonoBehaviour {
         _enemyHandler.SpawnEnemies(CurrentWave, null);
 
         if (CurrentWave % 5 == 0) {
+            _encounterHandler.SpawnCollectorEncounter();
+        }
+        else if (Random.Range(0, 100) < 5) {
             _encounterHandler.SpawnRandomEncounter();
         }
     }

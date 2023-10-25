@@ -1,23 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class EntityCollector : EncounterEntityBase {
+public class InteractiveEncounter : EncounterEntityBase {
     private bool _isEntrance;
-
-    private void Awake() {
-
-    }
-
-    private void Start() {
-        
-    }
-
     public override void Progress() {
         Move();
     }
-
     public void Move() {
         Vector3 targetPosition = _isEntrance ? Vector3.zero : Vector3.zero;
 

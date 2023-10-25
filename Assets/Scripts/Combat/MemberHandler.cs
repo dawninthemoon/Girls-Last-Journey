@@ -37,9 +37,10 @@ public class MemberHandler : MonoBehaviour {
         }
 
         for (int i = 0; i < _members.Count; ++i) {
-            var ally = _members[i];
-            if (ally.Health <= 0 || !ally.gameObject.activeSelf) {
-                _members[i].SetTarget(null);
+            var member = _members[i];
+            if (member.Health <= 0 || !member.gameObject.activeSelf) {
+                member.SetTarget(null);
+                _spawner.RemoveEntity(member);
                 _members.RemoveAt(i--);
             }
         }
@@ -51,6 +52,7 @@ public class MemberHandler : MonoBehaviour {
         newEntity.transform.position = position;
 
         newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
+        newEntity.InitializeEncounterSettings(OnEntitySold);
         _members.Add(newEntity);
     }
 
@@ -61,27 +63,13 @@ public class MemberHandler : MonoBehaviour {
         }
     }
 
-    public void OnEntityActive(EntityBase entity) {
-        entity.gameObject.SetActive(true);
-        _members.Add(entity); 
-        _synergyHandler.AddSynergy(entity, true);
-    }
-
-    public void OnEntityInactive(EntityBase entity) {
-        entity.SetTarget(null);
-        _synergyHandler.AddSynergy(entity, false);
-        ApplySynergies();
-
-        entity.gameObject.SetActive(false);
-    }
-
-    public void DisarmAllAllies() {
+    public void DisarmAllMember() {
         for (int i = 0; i < _members.Count; ++i) {
             _members[i].SetTarget(null);
         }
     }
 
-    public void RemoveAllAllies(EntitySpawner spawner) {
+    public void RemoveAllMember(EntitySpawner spawner) {
         for (int i = 0; i < _members.Count; ++i) {
             spawner.RemoveEntity(_members[i]);
             _members.RemoveAt(i--);
@@ -118,5 +106,13 @@ public class MemberHandler : MonoBehaviour {
             }
         }
         return result;
+    }
+
+    private void OnEntitySold(EntityBase entity) {
+        Vector3 position = entity.transform.position;
+
+        // 다음 Progress에 지워짐
+        entity.gameObject.SetActive(false);
+        SpawnMember(position);        
     }
 }

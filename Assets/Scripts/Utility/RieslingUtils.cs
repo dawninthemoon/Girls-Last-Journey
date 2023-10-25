@@ -110,6 +110,13 @@ namespace RieslingUtils {
             bool? isOverlaped = Physics2D.OverlapPoint(mousePosition)?.Equals(collider);
             return isOverlaped.HasValue ? isOverlaped.Value : false;
         }
+
+        public static Collider2D GetOverlapedCollider(string layerName) {
+            int layerMask = LayerMask.NameToLayer(layerName);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, 100f, (1 << layerMask));
+            return hit.collider;
+        }
     }
 
     public static class ExUnity {
