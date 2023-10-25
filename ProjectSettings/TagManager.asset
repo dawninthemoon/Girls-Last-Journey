@@ -8,7 +8,7 @@ TagManager:
   - Ally
   - Projectile
   - Enemy
-  - Undefined
+  - Encounters
   layers:
   - Default
   - TransparentFX

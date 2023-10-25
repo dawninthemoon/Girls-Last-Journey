@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1633967969821246918}
   m_Layer: 10
   m_Name: Collector
-  m_TagString: Untagged
+  m_TagString: Encounters
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 20
   _encounterType: 0
+  _waitTimeForExit: 60
 --- !u!212 &7205450126463014013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 32, y: 32}
+  m_Size: {x: 48, y: 48}
   m_EdgeRadius: 0
 --- !u!50 &8630339998317506831
 Rigidbody2D:
@@ -163,3 +164,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 0
   _encounterType: 0
+  _waitTimeForExit: 0

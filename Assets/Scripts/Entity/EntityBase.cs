@@ -131,7 +131,7 @@ public class EntityBase : MonoBehaviour {
         });
         
         var stream = entityShakedEvent.AsObservable();
-        stream.Buffer(stream.ThrottleFirst(System.TimeSpan.FromSeconds(0.5)))
+        stream.Buffer(stream.ThrottleFirst(System.TimeSpan.FromSeconds(0.5), Scheduler.MainThreadIgnoreTimeScale))
             .Where(x => x.Count > 4)
             .Subscribe(_ => OnEntityShaked(onItemRelease));
     }
