@@ -56,8 +56,12 @@ public class EnemyHandler : MonoBehaviour {
         if (_activeEnemies.Count == 0) {
             return null;
         }
-        int randomIndex = Random.Range(0, _activeEnemies.Count);
-        return _activeEnemies[randomIndex];
+        EntityBase result;
+        do {
+            int randomIndex = Random.Range(0, _activeEnemies.Count);
+            result =  _activeEnemies[randomIndex];
+        } while (!IsEnemyExistsInCamera(result));
+        return result;
     }
 
     public void SpawnEnemies(int waveCount, CombatStageConfig stageConfig) {
@@ -94,5 +98,20 @@ public class EnemyHandler : MonoBehaviour {
             entitySpanwer.RemoveEntity(_activeEnemies[i]);
             _activeEnemies.RemoveAt(i--);
         }
+    }
+
+    public bool IsEnemyExistsInCamera() {
+        bool result = false;
+        foreach (EntityBase enemy in _activeEnemies) {
+            if (IsEnemyExistsInCamera(enemy)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private bool IsEnemyExistsInCamera(EntityBase enemy) {
+        return CombatMap.IsInside(enemy.transform.position, enemy.Radius);
     }
 }
