@@ -15,7 +15,6 @@ public class EncounterHandler : MonoBehaviour {
 
     private void Awake() {
         _interactiveSettingArray = new UnityAction[] {
-            OnCollectorInteraction,
             OnVampireInteraction,
             OnHumanTraffickerInteraction,
             null
@@ -66,7 +65,9 @@ public class EncounterHandler : MonoBehaviour {
                 encounter = Instantiate(encounter);
 
                 _inactiveEncounters.Add(encounter);
-                _interactiveSettingArray[(int)encounter.EncounterType]?.Invoke();
+
+                var onInteraction = _interactiveSettingArray[(int)encounter.EncounterType];
+                encounter.Initialize(onInteraction);
 
                 encounter.gameObject.SetActive(false);
             }
@@ -76,7 +77,11 @@ public class EncounterHandler : MonoBehaviour {
     private void InitializeCollectorObjectPool() {
         _collectorObjectPool = new ObjectPool<InteractiveEncounter>(
             3,
-            () => Instantiate(_collectorPrefab),
+            () => {
+                var collector = Instantiate(_collectorPrefab);
+                collector.Initialize(OnCollectorInteraction);
+                return collector;
+            },
             (x) => x.gameObject.SetActive(true),
             (x) => x.gameObject.SetActive(false)
         );

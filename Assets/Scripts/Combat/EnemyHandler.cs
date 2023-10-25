@@ -83,7 +83,7 @@ public class EnemyHandler : MonoBehaviour {
             EntityInfo selectedInfo = _enemyInfoDictionary[selectedWave.enemyIDArray[i]];
             EntityDecorator decorator = new EntityDecorator(selectedInfo);
             EntityBase enemy = _enemySpawner.CreateEntity(decorator);
-            enemy.transform.position = new Vector3(randX, y);
+            enemy.transform.position = new Vector3(randX, y, -5f);
 
             _activeEnemies.Add(enemy);
         }

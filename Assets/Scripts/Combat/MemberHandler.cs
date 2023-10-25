@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using RieslingUtils;
 
 public class MemberHandler : MonoBehaviour {
     [SerializeField] private CombatDamageDisplay _damageDisplayer;
@@ -49,7 +50,7 @@ public class MemberHandler : MonoBehaviour {
     public void SpawnMember(Vector3 position) {
         EntityDecorator decorator = new EntityDecorator(_memberFactory.GetRandomMember());
         EntityBase newEntity = _spawner.CreateEntity(decorator);
-        newEntity.transform.position = position;
+        newEntity.transform.position = position.ChangeZPos(-5f);
 
         newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
         newEntity.InitializeEncounterSettings(OnEntitySold);

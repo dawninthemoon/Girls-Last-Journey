@@ -93,6 +93,7 @@ public class Truck : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("Enemy") || other.CompareTag("Ally")) {
             Vector3 direction = (other.transform.position - transform.position).normalized;
+            direction.z = 0f;
             other.transform.position += direction * _knockbackForce * 200f * Time.deltaTime;
         }
     }
