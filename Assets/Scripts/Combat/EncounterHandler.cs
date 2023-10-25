@@ -27,8 +27,13 @@ public class EncounterHandler : MonoBehaviour {
         if (_activeEncounters == null)
             return;
 
-        foreach (EncounterEntityBase encounter in _activeEncounters) {
-            encounter.Progress();
+        for (int i = 0; i < _activeEncounters.Count; ++i) {
+            if (_activeEncounters[i].gameObject.activeSelf) {
+                _activeEncounters[i].Progress();
+            }
+            else {
+                _activeEncounters.RemoveAt(i--);
+            }
         }
     }
 
@@ -67,7 +72,7 @@ public class EncounterHandler : MonoBehaviour {
                 _inactiveEncounters.Add(encounter);
 
                 var onInteraction = _interactiveSettingArray[(int)encounter.EncounterType];
-                encounter.Initialize(onInteraction);
+                encounter.Initialize(onInteraction, OnEncounterEnd);
 
                 encounter.gameObject.SetActive(false);
             }
@@ -79,7 +84,7 @@ public class EncounterHandler : MonoBehaviour {
             3,
             () => {
                 var collector = Instantiate(_collectorPrefab);
-                collector.Initialize(OnCollectorInteraction);
+                collector.Initialize(OnCollectorInteraction, OnEncounterEnd);
                 return collector;
             },
             (x) => x.gameObject.SetActive(true),
@@ -99,6 +104,16 @@ public class EncounterHandler : MonoBehaviour {
 
     private void OnHumanTraffickerInteraction() {
         
+    }
+
+    private void OnEncounterEnd(EncounterEntityBase encounter) {
+        encounter.gameObject.SetActive(false);
+        if (encounter.EncounterType.Equals(EncounterEntityBase.Type.Collector)) {
+            _collectorObjectPool.ReturnObject(encounter as InteractiveEncounter);
+        }
+        else {
+            _inactiveEncounters.Add(encounter);
+        }
     }
 
     private Vector3 GetInitialPosition() {

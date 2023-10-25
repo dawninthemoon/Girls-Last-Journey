@@ -21,8 +21,11 @@ public class InteractiveEncounter : EncounterEntityBase {
     public void Move() {
         if (_doMove) {
             Vector3 targetPosition = _isEntrance ? Vector3.zero : _initialPosition;
-            if (Vector3.Distance(transform.position, targetPosition) < 1f) {
+            if (Vector3.SqrMagnitude(transform.position - targetPosition) < 1f) {
                 _doMove = false;
+                if (!_isEntrance) {
+                    _onEncounterEnd.Invoke(this);
+                }
             }
             Vector3 direction = (targetPosition - transform.position).normalized;
             transform.position += direction * _moveSpeed * Time.deltaTime;
@@ -37,7 +40,7 @@ public class InteractiveEncounter : EncounterEntityBase {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag(gameObject.tag)) {
+        if (_isEntrance && other.CompareTag(gameObject.tag)) {
             _doMove = false;
         }
     }
