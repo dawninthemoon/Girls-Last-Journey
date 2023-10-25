@@ -29,18 +29,16 @@ public class MemberHandler : MonoBehaviour {
     }
 
     public void Progress(EnemyHandler enemyHandler) {
-        foreach (EntityBase ally in _members) {
+        foreach (EntityBase member in _members) {
             var activeEnemies = enemyHandler.ActiveEnemies;
-            ITargetable target = activeEnemies.FindClosest(ally.transform.position)?.GetComponent<Agent>();
-            ally.SetTarget(target);
-
-            ally.transform.position = CombatMap.ClampPosition(ally.transform.position, ally.Radius);
+            ITargetable target = activeEnemies.FindClosest(member.transform.position)?.GetComponent<Agent>();
+            member.SetTarget(target);
+            member.transform.position = CombatMap.ClampPosition(member.transform.position, member.Radius);
         }
 
         for (int i = 0; i < _members.Count; ++i) {
             var member = _members[i];
             if (member.Health <= 0 || !member.gameObject.activeSelf) {
-                member.SetTarget(null);
                 _spawner.RemoveEntity(member);
                 _members.RemoveAt(i--);
             }

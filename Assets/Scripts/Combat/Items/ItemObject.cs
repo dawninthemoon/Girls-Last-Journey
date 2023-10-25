@@ -41,8 +41,10 @@ public class ItemObject : MonoBehaviour {
                 var collider = ExMouse.GetOverlapedCollider(MemberHandler.MemberTagName);
                 if (collider != null) {
                     EntityBase entity = collider.GetComponent<EntityBase>();
-                    entity.EquipItem(ItemData);
-                    itemPool.ReturnObject(this);
+                    if (!entity.HasItem) {
+                        entity.EquipItem(ItemData);
+                        itemPool.ReturnObject(this);
+                    }
                 }
             });
         }

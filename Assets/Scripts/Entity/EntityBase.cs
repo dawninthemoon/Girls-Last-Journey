@@ -79,6 +79,7 @@ public class EntityBase : MonoBehaviour {
 
     public void Initialize(EntityDecorator entityDecorator) {
         _entityDecorator = entityDecorator;
+        EquipItem(null);
         _bulletPosition.localPosition = Info.bulletOffset;
 
         Sprite weaponSprite = Info.attackConfig.Config.weaponSprite;
@@ -166,7 +167,7 @@ public class EntityBase : MonoBehaviour {
         if (!CanBehaviour) {
             return;
         }
-        _animationControl.SetMoveAnimationState(!direction.Equals(Vector2.zero));
+        _animationControl.SetMoveAnimationState(direction.sqrMagnitude > 0f);
         if (direction.sqrMagnitude > 0f) {
             Vector3 nextPosition = transform.position + (Vector3)direction * Time.deltaTime * _entityDecorator.MoveSpeed;
             transform.position = nextPosition;
@@ -247,6 +248,7 @@ public class EntityBase : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if ((other.CompareTag(EnemyHandler.EnemyTagName) || other.CompareTag(MemberHandler.MemberTagName))) {
             Vector3 direction = (other.transform.position - transform.position).normalized;
+            direction.z = 0f;
             other.transform.position += direction * 100f * Time.deltaTime;
         }
     }
