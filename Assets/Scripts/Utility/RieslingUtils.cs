@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace RieslingUtils {
     public static class ExVector {
@@ -125,13 +126,33 @@ namespace RieslingUtils {
         }
     }
 
-    public static class ExList {
+    public static class ExCollection {
         public static T GetRandomElement<T>(this IList<T> list) where T : class {
             T result = null;
             int numOfElements = list.Count;
             if (numOfElements > 0) {
                 int randomIndex = Random.Range(0, numOfElements);
                 result = list[randomIndex];
+            }
+            return result;
+        }
+
+        public static T1 GetRandomKey<T1, T2>(this Dictionary<T1, T2> dict) {
+            T1 result = default(T1);
+            int numOfElements = dict.Count;
+            if (numOfElements > 0) {
+                int randomIndex = Random.Range(0, numOfElements);
+                result = dict.ElementAt(randomIndex).Key;
+            }
+            return result;
+        }
+
+        public static T2 GetRandomValue<T1, T2>(this Dictionary<T1, T2> dict) {
+            T2 result = default(T2);
+            int numOfElements = dict.Count;
+            if (numOfElements > 0) {
+                int randomIndex = Random.Range(0, numOfElements);
+                result = dict.ElementAt(randomIndex).Value;
             }
             return result;
         }

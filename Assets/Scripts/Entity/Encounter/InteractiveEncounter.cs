@@ -28,6 +28,7 @@ public class InteractiveEncounter : EncounterEntityBase {
                 }
             }
             Vector3 direction = (targetPosition - transform.position).normalized;
+            direction.z = 0f;
             transform.position += direction * _moveSpeed * Time.deltaTime;
         }
     }

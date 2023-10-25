@@ -5,22 +5,26 @@ using UnityEngine.Events;
 using RieslingUtils;
 
 public class EncounterHandler : MonoBehaviour {
+    [SerializeField] private CombatReward _rewardControl;
     [SerializeField] private GoldHandler _goldHandler;
     [SerializeField] private InteractiveEncounter _collectorPrefab;
-    private List<EncounterEntityBase> _inactiveEncounters;
     private List<EncounterEntityBase> _activeEncounters;
     public static readonly string EncountersLabel = "Encounters";
     private UnityAction[] _interactiveSettingArray;
-    private ObjectPool<InteractiveEncounter> _collectorObjectPool;
+    private ObjectPool<EncounterEntityBase> _collectorObjectPool;
+    private Dictionary<EncounterEntityBase.Type, ObjectPool<EncounterEntityBase>> _encounterObjectPool;
 
     private void Awake() {
+        _encounterObjectPool = new Dictionary<EncounterEntityBase.Type, ObjectPool<EncounterEntityBase>>();
+        _activeEncounters = new List<EncounterEntityBase>();
         _interactiveSettingArray = new UnityAction[] {
+            OnCollectorInteraction,
             OnVampireInteraction,
-            OnHumanTraffickerInteraction,
+            null,
             null
         };
         InitializeEncounters();
-        InitializeCollectorObjectPool();
+        _collectorObjectPool = CreateObjectPool(_collectorPrefab, OnCollectorInteraction);
     }
 
     private void Update() {
@@ -38,16 +42,23 @@ public class EncounterHandler : MonoBehaviour {
     }
 
     public void SpawnRandomEncounter() {
-        if (_inactiveEncounters.Count == 0) {
-            return;
-        }
+        EncounterEntityBase.Type encounterType = EncounterEntityBase.Type.HumanTrafficker;
+        bool canAppear;
+        do { 
+            canAppear = true;
+            encounterType = _encounterObjectPool.GetRandomKey();
+            if (encounterType.Equals(EncounterEntityBase.Type.StarvingOne)) {
+                if (_rewardControl.NumOfItems < StarvingOneEncounter.TargetClearCount) {
+                    canAppear = false;
+                }
+            }
+        } while (!canAppear);
 
-        EncounterEntityBase encounter = _inactiveEncounters.GetRandomElement();
+        var encounter = _encounterObjectPool[encounterType].GetObject();
         encounter.OnEncounter(GetInitialPosition());
         encounter.gameObject.SetActive(true);
         
         _activeEncounters.Add(encounter);
-        _inactiveEncounters.Remove(encounter);
     }
 
     public void SpawnCollectorEncounter() {
@@ -62,34 +73,33 @@ public class EncounterHandler : MonoBehaviour {
         assetLoader.LoadAssetsAsync<GameObject>(EncountersLabel, (op) => {
             var entities = op.Result as List<GameObject>;
 
-            _activeEncounters = new List<EncounterEntityBase>(op.Result.Count);
-            _inactiveEncounters = new List<EncounterEntityBase>(op.Result.Count);
-
             foreach (GameObject entity in entities) {
-                EncounterEntityBase encounter = entity.GetComponent<EncounterEntityBase>();
-                encounter = Instantiate(encounter);
-
-                _inactiveEncounters.Add(encounter);
-
-                var onInteraction = _interactiveSettingArray[(int)encounter.EncounterType];
-                encounter.Initialize(onInteraction, OnEncounterEnd);
-
-                encounter.gameObject.SetActive(false);
+                EncounterEntityBase prefab = entity.GetComponent<EncounterEntityBase>();
+                var interactionCallback = _interactiveSettingArray[(int)prefab.EncounterType];
+                _encounterObjectPool.Add(prefab.EncounterType, CreateObjectPool(prefab, interactionCallback));
             }
         });
     }
 
-    private void InitializeCollectorObjectPool() {
-        _collectorObjectPool = new ObjectPool<InteractiveEncounter>(
+    private ObjectPool<EncounterEntityBase> CreateObjectPool(EncounterEntityBase prefab, UnityAction interactionCallback) {
+        var objectPool = new ObjectPool<EncounterEntityBase>(
             3,
             () => {
-                var collector = Instantiate(_collectorPrefab);
-                collector.Initialize(OnCollectorInteraction, OnEncounterEnd);
-                return collector;
+                var encounter = Instantiate(prefab);
+                encounter.Initialize(interactionCallback, OnEncounterEnd);
+                if (encounter is StarvingOneEncounter) {
+                    (encounter as StarvingOneEncounter)
+                        .SetCallbackSettings(
+                            _rewardControl.GetClosestItem,
+                            _rewardControl.OnItemReturn
+                        );
+                }
+                return encounter;
             },
             (x) => x.gameObject.SetActive(true),
             (x) => x.gameObject.SetActive(false)
         );
+        return objectPool;
     }
 
     private void OnCollectorInteraction() {
@@ -102,17 +112,13 @@ public class EncounterHandler : MonoBehaviour {
         _goldHandler.GainGold(goldAmount);
     }
 
-    private void OnHumanTraffickerInteraction() {
-        
-    }
-
     private void OnEncounterEnd(EncounterEntityBase encounter) {
         encounter.gameObject.SetActive(false);
         if (encounter.EncounterType.Equals(EncounterEntityBase.Type.Collector)) {
             _collectorObjectPool.ReturnObject(encounter as InteractiveEncounter);
         }
         else {
-            _inactiveEncounters.Add(encounter);
+            _encounterObjectPool[encounter.EncounterType].ReturnObject(encounter);
         }
     }
 

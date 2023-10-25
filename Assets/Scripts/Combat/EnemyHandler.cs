@@ -52,7 +52,7 @@ public class EnemyHandler : MonoBehaviour {
         }
     }
 
-    public EntityBase GetRandomEnemy() {
+    public EntityBase GetRandomEnemyInCamera() {
         if (_activeEnemies.Count == 0) {
             return null;
         }

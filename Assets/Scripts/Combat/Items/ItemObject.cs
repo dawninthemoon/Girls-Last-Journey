@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using RieslingUtils;
 
 public class ItemObject : MonoBehaviour {
@@ -17,7 +18,7 @@ public class ItemObject : MonoBehaviour {
         _renderer.sprite = sprite;
     }
 
-    public void SetInteraction(ObjectPool<ItemObject> itemPool, bool canEquip) {
+    public void SetInteraction(UnityAction<ItemObject> itemReturnCallback, bool canEquip) {
         Interactive.ClearAllEvents();
 
         Interactive.OnMouseDragEvent.AddListener(() => {
@@ -30,7 +31,7 @@ public class ItemObject : MonoBehaviour {
             if (collider != null) {
                 var collector = collider.GetComponent<InteractiveEncounter>();
                 if (collector.EncounterType.Equals(EncounterEntityBase.Type.Collector)) {
-                    itemPool.ReturnObject(this);
+                    itemReturnCallback.Invoke(this);
                     collector.OnInteraction();
                 }
             }
@@ -43,7 +44,7 @@ public class ItemObject : MonoBehaviour {
                     EntityBase entity = collider.GetComponent<EntityBase>();
                     if (!entity.HasItem) {
                         entity.EquipItem(ItemData);
-                        itemPool.ReturnObject(this);
+                        itemReturnCallback.Invoke(this);
                     }
                 }
             });

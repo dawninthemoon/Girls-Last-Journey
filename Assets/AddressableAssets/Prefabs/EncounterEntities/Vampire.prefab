@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7205450126463014013}
   - component: {fileID: 8810311650953243795}
   - component: {fileID: 8630339998317506831}
-  - component: {fileID: 1633967969821246918}
   m_Layer: 10
   m_Name: Vampire
   m_TagString: Encounters
@@ -150,18 +149,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1633967969821246918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7205450126463014011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76346face4a8f6b4d94432ce395ac72d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 0
-  _encounterType: 0
-  _waitTimeForExit: 0

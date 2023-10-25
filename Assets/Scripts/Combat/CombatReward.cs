@@ -14,9 +14,15 @@ public class CombatReward : MonoBehaviour {
     private ItemData _stuffData;
     private ObjectPool<ItemObject> _itemObjectPool;
     private ObjectPool<ChestObject> _chestObjectPool;
+    private KdTree<ItemObject> _activeItems;
+    public int NumOfItems {
+        get { return _activeItems.Count; }
+    }
     private static readonly string ItemAddressablesKey = "ItemData";
+    public static readonly string ItemObjectTag = "Item";
 
     private void Awake() {
+        _activeItems = new KdTree<ItemObject>();
         AssetLoader assetLoader = AssetLoader.Instance;
 
         assetLoader.LoadAssetsAsync<ItemData>(ItemAddressablesKey, (x) => {
@@ -45,6 +51,14 @@ public class CombatReward : MonoBehaviour {
         );
     }
 
+    private void Update() {
+        for (int i = 0; i < _activeItems.Count; ++i) {
+            if (!_activeItems[i].gameObject.activeSelf) {
+                _activeItems.RemoveAt(i--);
+            }
+        }
+    }
+
     public void SpawnItemRewardAt(Vector3 position) {
         ItemData item = _itemDataList.GetRandomElement();
         SpawnRewardAt(item, position, true);
@@ -56,8 +70,9 @@ public class CombatReward : MonoBehaviour {
 
     private ItemObject SpawnRewardAt(ItemData item, Vector3 position, bool canEquip) {
         ItemObject obj = CreateItemObject(item, position);
-        obj.SetInteraction(_itemObjectPool, canEquip);
+        obj.SetInteraction(OnItemReturn, canEquip);
         obj.SetSprite(item.Sprite);
+        _activeItems.Add(obj);
         return obj;
     }
 
@@ -78,6 +93,14 @@ public class CombatReward : MonoBehaviour {
         ChestObject obj = _chestObjectPool.GetObject();
         obj.transform.position = position;
         InitializeChest(obj, _chestDataList.GetRandomElement());
+    }
+
+    public ItemObject GetClosestItem(Vector3 position) {
+        return _activeItems.FindClosest(position);
+    }
+
+    public void OnItemReturn(ItemObject item) {
+        _itemObjectPool.ReturnObject(item);
     }
 
     private void InitializeChest(ChestObject obj, ChestData data) {

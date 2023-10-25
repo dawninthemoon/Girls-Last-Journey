@@ -3071,6 +3071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a27de7e71261e4facba10e5eb2de14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rewardControl: {fileID: 1838901616}
   _goldHandler: {fileID: 366847861}
   _collectorPrefab: {fileID: 3655996339799409270, guid: 7a5862dae065dbe46a71df90cec0f974, type: 3}
 --- !u!1 &1964649322

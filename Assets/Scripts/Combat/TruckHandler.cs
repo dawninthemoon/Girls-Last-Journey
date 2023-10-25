@@ -35,7 +35,7 @@ public class TruckHandler : MonoBehaviour {
 
     private void SpawnTruck() {
         if (_enemyHandler.IsEnemyExistsInCamera() && _goldHandler.TryPayGold(_truckSpawnCost)) {
-            EntityBase target = _enemyHandler.GetRandomEnemy();
+            EntityBase target = _enemyHandler.GetRandomEnemyInCamera();
             if (target != null) {
                 SpawnTruck(target.transform.position);
             }
