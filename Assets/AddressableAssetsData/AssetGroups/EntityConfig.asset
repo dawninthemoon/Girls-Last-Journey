@@ -27,8 +27,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemyInfo
-  - m_GUID: 3daaea050d9a0a345b4a144afb97d875
-    m_Address: Member
+  - m_GUID: d76fd3de4dad99b428053c9a725e1d6d
+    m_Address: MemberSprites
     m_ReadOnly: 0
     m_SerializedLabels:
     - MemberInfo

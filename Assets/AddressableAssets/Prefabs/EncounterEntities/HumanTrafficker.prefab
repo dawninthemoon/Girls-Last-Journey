@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1633967969821246918}
   m_Layer: 10
   m_Name: HumanTrafficker
-  m_TagString: Untagged
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,12 +91,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1315741624, guid: 3daaea050d9a0a345b4a144afb97d875, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 98af79ef87f579649ba9a95a0a53ef02, type: 3}
   m_Color: {r: 0.0018053644, g: 0.85882354, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 64, y: 64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -120,7 +120,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 64, y: 64}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 64, y: 64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

@@ -12,6 +12,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
     }
     [SerializeField] protected int _moveSpeed;
     [SerializeField] private Type _encounterType;
+    protected Vector3 _initialPosition;
     private UnityAction _onInteraction;
     public Type EncounterType {
         get { return _encounterType; }
@@ -19,6 +20,10 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
     public virtual void Initialize(UnityAction onInteraction) {
         _onInteraction = onInteraction;
+    }
+    
+    public virtual void OnEncounter(Vector3 initialPosition) {
+        transform.position = _initialPosition = initialPosition;
     }
 
     public abstract void Progress();

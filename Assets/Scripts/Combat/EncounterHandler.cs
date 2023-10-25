@@ -38,7 +38,7 @@ public class EncounterHandler : MonoBehaviour {
         }
 
         EncounterEntityBase encounter = _inactiveEncounters.GetRandomElement();
-        encounter.transform.position = GetInitialPosition();
+        encounter.OnEncounter(GetInitialPosition());
         encounter.gameObject.SetActive(true);
         
         _activeEncounters.Add(encounter);
@@ -47,7 +47,7 @@ public class EncounterHandler : MonoBehaviour {
 
     public void SpawnCollectorEncounter() {
         var collector = _collectorObjectPool.GetObject();
-        collector.transform.position = GetInitialPosition();
+        collector.OnEncounter(GetInitialPosition());
 
         _activeEncounters.Add(collector);
     }

@@ -31,6 +31,7 @@ public class MemberFactory : MonoBehaviour {
         info.entityID = Random.Range(1000, 2000).ToString();
         info.animatorController = _memberAnimator;
         info.status = status;
+        Debug.Log(_memberBodySprites.Count);
         info.bodySprite = _memberBodySprites[Random.Range(0, _memberBodySprites.Count)];
         info.attackConfig = _attackConfigList[Random.Range(0, _attackConfigList.Count)];
         info.skillConfig = info.attackConfig;
