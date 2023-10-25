@@ -32,7 +32,8 @@ public class InteractiveEncounter : EncounterEntityBase {
     private async UniTaskVoid WaitForExit() {
         await UniTask.Delay(System.TimeSpan.FromSeconds(_waitTimeForExit));
 
-        _isEntrance = _doMove = true;
+        _doMove = true;
+        _isEntrance = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
