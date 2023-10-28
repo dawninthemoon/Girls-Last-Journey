@@ -17,12 +17,15 @@ MonoBehaviour:
     buffDuration: 1
     health: 0
     mana: 0
-    morale: 0
     block: 0
+    blockPercent: 0
     attackDamage: 0
     attackDamagePercent: 0
-    attackSpeed: 0.5
+    attackSpeedPercent: 0.5
     moveSpeed: 0
-    attackRange: 0
     healthRegen: 0
+    healthRegenPercent: 0
+    manaRegen: 0
+    manaRegenPercent: 0
     aimingEfficiency: 0
+    extraLevel: 0

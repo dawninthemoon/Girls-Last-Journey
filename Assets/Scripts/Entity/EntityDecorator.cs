@@ -125,6 +125,10 @@ public class EntityDecorator : IEntityStatus {
             int finalHealthRegen = Info.status.HealthRegen;
             float healthRegenMultiplier = 0f;
 
+            if (Item) {
+                finalHealthRegen += Item.HealthRegen;
+            }
+
             foreach (BuffConfig buff in _buffList) {
                 finalHealthRegen += buff.HealthRegen;
             }
@@ -141,6 +145,10 @@ public class EntityDecorator : IEntityStatus {
         get { 
             int finalManaRegen = Info.status.ManaRegen;
             float manaRegenMultiplier = 0f;
+
+            if (Item) {
+                finalManaRegen += Item.ManaRegen;
+            }
 
             foreach (BuffConfig buff in _buffList) {
                 finalManaRegen += buff.ManaRegen;
