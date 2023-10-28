@@ -82,7 +82,7 @@ public class EntityBase : MonoBehaviour {
         EquipItem(null);
         _bulletPosition.localPosition = Info.bulletOffset;
 
-        Sprite weaponSprite = Info.attackConfig.Config.weaponSprite;
+        Sprite weaponSprite = Info.attackConfig.AttackConfig.weaponSprite;
 
         _healthManaControl.Initialize(entityDecorator);
         _animationControl.Initialize(Info.bodySprite, weaponSprite, Info.animatorController);
@@ -187,11 +187,11 @@ public class EntityBase : MonoBehaviour {
 
         _healthManaControl.AddMana(10);
 
-        AttackConfig config = Info.attackConfig.Config;
+        AttackInfo config = Info.attackConfig.AttackConfig;
         if (_healthManaControl.IsManaFull) {
             // Use Skill
             _healthManaControl.Mana = 0;
-            config = Info.skillConfig.Config;
+            config = Info.skillConfig.AttackConfig;
         }
         _animationControl.PlayAttackAnimation();
 

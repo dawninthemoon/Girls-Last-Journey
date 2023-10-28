@@ -1,11 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using AttackBehaviours;
+using AttackBehaviours.Effects;
 using UnityEngine;
+
+[System.Serializable]
+public struct AttackInfo {
+    public LayerMask targetLayerMask;
+    public AttackBehaviour attackBehaviour;
+    public AttackEffect[] attackEffects;
+    public Sprite weaponSprite;
+    public string soundEffectName;
+}
+
 
 [CreateAssetMenu(menuName = "ScriptableObjects/AttackConfig", fileName = "NewAttackConfig")]
 public class SOAttackConfig : ScriptableObject {
-    [SerializeField] private AttackConfig _config;
-    public AttackConfig Config {
-        get { return _config; }
+    [SerializeField] private AttackInfo _attackConfig;
+    [SerializeField] private AttackInfo _skillConfig;
+    public AttackInfo AttackConfig {
+        get { return _attackConfig; }
+    }
+    public AttackInfo SkillConfig {
+        get { return _skillConfig; }
     }
 }
