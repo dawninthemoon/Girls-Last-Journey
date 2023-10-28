@@ -7,7 +7,11 @@ public class MemberFactory : MonoBehaviour {
     private List<SOAttackConfig> _attackConfigList;
     private List<Sprite> _memberBodySprites;
     private List<EntityStatus> _statusList;
+    private int _memberSequence;
+
     private void Awake() {
+        _memberSequence = 1000;
+        
         var assetLoader = AssetLoader.Instance;
 
         assetLoader.LoadAssetsAsync<Sprite>("MemberInfo", (x) => {
@@ -28,7 +32,7 @@ public class MemberFactory : MonoBehaviour {
 
     public EntityInfo CreateEntityInfo(EntityStatus status) {
         EntityInfo info = new EntityInfo();
-        info.entityID = Random.Range(1000, 2000).ToString();
+        info.entityID = (_memberSequence++).ToString();
         info.animatorController = _memberAnimator;
         info.status = status;
         info.bodySprite = _memberBodySprites[Random.Range(0, _memberBodySprites.Count)];

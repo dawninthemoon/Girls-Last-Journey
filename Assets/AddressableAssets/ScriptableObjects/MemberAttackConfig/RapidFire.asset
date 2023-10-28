@@ -20,7 +20,7 @@ MonoBehaviour:
     attackEffects:
     - {fileID: 11400000, guid: 15f55f9361eb44444ae06c473833c453, type: 2}
     weaponSprite: {fileID: 21300000, guid: 5f6a2c53a5dd30c469ae3df7ef72fbfc, type: 3}
-    attackDistance: 60
+    attackDistance: 120
     soundEffectName: se_arrow_shooting_1
   _skillConfig:
     targetLayerMask:
@@ -30,5 +30,5 @@ MonoBehaviour:
     attackEffects:
     - {fileID: 11400000, guid: 15f55f9361eb44444ae06c473833c453, type: 2}
     weaponSprite: {fileID: 21300000, guid: 5f6a2c53a5dd30c469ae3df7ef72fbfc, type: 3}
-    attackDistance: 60
+    attackDistance: 120
     soundEffectName: se_arrow_shooting_1

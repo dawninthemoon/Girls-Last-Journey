@@ -87,16 +87,12 @@ public class EntityBase : MonoBehaviour {
         _healthManaControl.Initialize(entityDecorator);
         _animationControl.Initialize(Info.bodySprite, weaponSprite, Info.animatorController);
         
-        _agent.Initialize(_entityDecorator, Radius, GetAttackDistance);
-
         InitalizeStatus();
+        _agent.Initialize(_entityDecorator, Radius, GetAttackDistance);
     }
 
     private void Update() {
         _healthManaControl.Progress();
-        if (BuffControl != null) {
-            CanBehaviour = !BuffControl.IsDebuffExists("stun");
-        }
     }
 
     private void InitalizeStatus() {
@@ -164,7 +160,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void Move(Vector2 direction) {
-        if (!CanBehaviour) {
+        if (!CanBehaviour || BuffControl.IsDebuffExists("stun")) {
             return;
         }
         _animationControl.SetMoveAnimationState(direction.sqrMagnitude > 0f);
@@ -181,7 +177,7 @@ public class EntityBase : MonoBehaviour {
     }
 
     private void Attack() {
-        if (!CanBehaviour) {
+        if (!CanBehaviour || BuffControl.IsDebuffExists("stun")) {
             return;
         }
 
