@@ -9,6 +9,7 @@ public class CombatMain : MonoBehaviour {
     [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private WaveHandler _waveHandler;
     [SerializeField] private CombatReward _rewardControl;
+    [SerializeField] private SynergyHandler _synergyHandler;
 
     private async UniTaskVoid Start() {
         var soundManager = SoundManager.Instance;
@@ -34,7 +35,7 @@ public class CombatMain : MonoBehaviour {
     }
 
     private void OnEnemyDead(Vector3 lastPosition) {
-        if (Random.Range(0, 10) < 1) {
+        if (Random.Range(0, 10) < 1 * _synergyHandler.ExtraItemDropPercent) {
             _rewardControl.SpawnStuffRewardAt(lastPosition);
         }
         _memberHandler.GainExpToMembers(30);

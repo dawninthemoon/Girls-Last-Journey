@@ -342,6 +342,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92188591}
   m_CullTransparentMesh: 1
+--- !u!1 &295863414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 295863415}
+  - component: {fileID: 295863416}
+  m_Layer: 0
+  m_Name: SynergyHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &295863415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295863414}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1741768610}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &295863416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295863414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2722f8ba917e056458a1bf5c5676dbb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &366847859
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ab827df6c3dec47a247a8a4a9055db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _synergyHandler: {fileID: 295863416}
   _initialGold: 100
 --- !u!1 &399274412
 GameObject:
@@ -1864,6 +1909,7 @@ MonoBehaviour:
   _enemyHandler: {fileID: 970460263}
   _waveHandler: {fileID: 1154829298}
   _rewardControl: {fileID: 1838901616}
+  _synergyHandler: {fileID: 295863416}
 --- !u!4 &1154829297
 Transform:
   m_ObjectHideFlags: 0
@@ -2781,7 +2827,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 295863415}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2799,6 +2846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damageDisplayer: {fileID: 1552111172}
   _rewardControl: {fileID: 1838901616}
+  _synergyHandler: {fileID: 295863416}
 --- !u!114 &1741768612
 MonoBehaviour:
   m_ObjectHideFlags: 0

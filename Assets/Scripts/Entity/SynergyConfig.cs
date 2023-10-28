@@ -19,17 +19,22 @@ public enum SynergyType {
 
 [CreateAssetMenu(menuName = "ScriptableObjects/SynergyConfig", fileName = "NewSynergy")]
 public class SynergyConfig : ScriptableObject {
-    [System.Serializable]
-    public struct SynergyPair {
-        public int requireAllies;
-        public BuffConfig buff;
-    }
     [SerializeField] private SynergyType _type;
-    [SerializeField] private SynergyPair[] _synergies;
+    [SerializeField] private BuffConfig _synergyBuff;
+    [SerializeField] private float _extraItemDropPercent;
+    [SerializeField] private float _extraGoldGainPercent;
+
     public SynergyType Type {
         get { return _type; }
     }
-    public SynergyPair[] Synergies {
-        get { return _synergies; }
+    public BuffConfig Buff {
+        get { return _synergyBuff; }
+    }
+
+    public float ExtraItemDropPercent {
+        get { return _extraItemDropPercent; }
+    }
+    public float ExtraGoldGainPercent {
+        get { return _extraGoldGainPercent; }
     }
 }
