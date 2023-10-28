@@ -33,7 +33,6 @@ public class MemberFactory : MonoBehaviour {
         info.status = status;
         info.bodySprite = _memberBodySprites[Random.Range(0, _memberBodySprites.Count)];
         info.attackConfig = _attackConfigList[Random.Range(0, _attackConfigList.Count)];
-        info.skillConfig = info.attackConfig;
         info.synergy1 = GetRandomSynergy();
         info.synergy2 = GetRandomSynergy();
         return info;

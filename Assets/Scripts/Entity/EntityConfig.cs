@@ -15,7 +15,6 @@ public class EntityInfo {
     public SynergyType synergy2;
 
     public SOAttackConfig attackConfig;
-    public SOAttackConfig skillConfig;
 
     public Vector2 bulletOffset;
 }

@@ -8,11 +8,7 @@ public class SimpleProjectile : ProjectileBase {
     [SerializeField] private float _lifeTime = 20f;
     private string _targetTag;
     private Vector3 _direction;
-    private float _moveSpeed;
     private float _timeAgo;
-    private EntityBase _caster;
-    private IAttackEffect[] _effects;
-    private List<EntityBase> _cachedEntityList = new List<EntityBase>(1);
     public override void Initialize(EntityBase caster, EntityBase target, float moveSpeed, IAttackEffect[] effects) {
         _direction = (target.transform.position - transform.position).normalized;
         float angle = ExVector.GetDegree(transform.position, target.transform.position);

@@ -189,9 +189,8 @@ public class EntityBase : MonoBehaviour {
 
         AttackInfo config = Info.attackConfig.AttackConfig;
         if (_healthManaControl.IsManaFull) {
-            // Use Skill
             _healthManaControl.Mana = 0;
-            config = Info.skillConfig.AttackConfig;
+            config = Info.attackConfig.SkillConfig;
         }
         _animationControl.PlayAttackAnimation();
 
