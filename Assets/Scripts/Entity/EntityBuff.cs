@@ -9,18 +9,25 @@ public class EntityBuff {
     private EntityDecorator _status;
     private Dictionary<string, int> _currentDebuffSet;
 
-    public EntityBuff(MonoBehaviour executer, EntityDecorator status) {
+    public EntityBuff(MonoBehaviour executer) {
         _currentDebuffSet = new Dictionary<string, int>();
         _executer = executer;
+    }
+
+    public void Initialize(EntityDecorator status) {
         _status = status;
     }
 
     public void AddBuff(BuffConfig buff) {
-        _status.AddBuff(buff);
+        if (buff != null) {
+            _status.AddBuff(buff);
+        }
     }
 
     public void RemoveBuff(BuffConfig buff) {
-        _status.RemoveBuff(buff);
+        if (buff != null) {
+            _status.RemoveBuff(buff);
+        }
     }
 
     public void AddBuffWithDuration(BuffConfig buffConfig) {

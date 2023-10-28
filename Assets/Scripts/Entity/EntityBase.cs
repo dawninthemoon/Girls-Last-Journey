@@ -71,7 +71,7 @@ public class EntityBase : MonoBehaviour {
         _healthManaControl = new EntityHealthMana(_uiControl);
         FinalDamageInfo = new DamageInfo(this);
 
-        BuffControl = new EntityBuff(this, _entityDecorator);
+        BuffControl = new EntityBuff(this);
 
         _agent.OnMovementInput.AddListener(Move);
         _agent.OnAttackRequested.AddListener(Attack);
@@ -79,6 +79,8 @@ public class EntityBase : MonoBehaviour {
 
     public void Initialize(EntityDecorator entityDecorator) {
         _entityDecorator = entityDecorator;
+        BuffControl.Initialize(_entityDecorator);
+
         EquipItem(null);
         _bulletPosition.localPosition = Info.bulletOffset;
 

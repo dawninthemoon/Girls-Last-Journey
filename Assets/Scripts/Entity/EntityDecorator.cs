@@ -16,6 +16,15 @@ public class EntityDecorator : IEntityStatus {
         get;
         set;
     }
+    public int FinalLevel {
+        get {
+            int finalLevel = Level;
+            foreach (BuffConfig buff in _buffList) {
+                finalLevel += buff.ExtraLevel;
+            }
+            return finalLevel;
+        }
+    }
 
     public EntityDecorator(EntityInfo entityInfo) {
         _buffList = new List<BuffConfig>();
@@ -32,7 +41,9 @@ public class EntityDecorator : IEntityStatus {
     }
 
     public void RemoveBuff(BuffConfig config) {
-        _buffList.Remove(config);
+        if (_buffList.Exists(x => x.Equals(config))) {
+            _buffList.Remove(config);
+        }
     }
 
     public int Health { 
@@ -110,12 +121,18 @@ public class EntityDecorator : IEntityStatus {
     public int MoveSpeed { 
         get {
             int finalMoveSpeed = Info.status.MoveSpeed;
+            float moveSpeedMultiplier = 0f;
 
-            if (Item)
+            if (Item) {
                 finalMoveSpeed += Item.MoveSpeed;
-            foreach (IEntityStatus buff in _buffList) {
-                finalMoveSpeed += buff.MoveSpeed;
             }
+
+            foreach (BuffConfig buff in _buffList) {
+                finalMoveSpeed += buff.MoveSpeed;
+                moveSpeedMultiplier += buff.MoveSpeedPercent;
+            }
+            finalMoveSpeed += Mathf.FloorToInt(finalMoveSpeed * moveSpeedMultiplier);
+
             return finalMoveSpeed;
         }
     }

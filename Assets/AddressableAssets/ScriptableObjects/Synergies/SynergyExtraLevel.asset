@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85a55cd45540cb64e9cec715ad63609d, type: 3}
-  m_Name: NewSynergy
+  m_Name: SynergyExtraLevel
   m_EditorClassIdentifier: 
-  _type: 1
-  _synergies: []
+  _type: 9
+  _synergyBuff: {fileID: 11400000, guid: 0b33a5635af0a6144817baf1b13d4a37, type: 2}
+  _extraItemDropPercent: 0
+  _extraGoldGainPercent: 0

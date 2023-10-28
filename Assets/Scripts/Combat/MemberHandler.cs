@@ -7,8 +7,8 @@ using RieslingUtils;
 public class MemberHandler : MonoBehaviour {
     [SerializeField] private CombatDamageDisplay _damageDisplayer;
     [SerializeField] private CombatReward _rewardControl;
+    [SerializeField] private SynergyHandler _synergyHandler;
     private KdTree<EntityBase> _members;
-    private SynergyHandler _synergyHandler;
     private MemberFactory _memberFactory;
     private EntitySpawner _spawner;
     private static readonly string MemberPrefabName = "MemberPrefab";
@@ -25,7 +25,6 @@ public class MemberHandler : MonoBehaviour {
         _memberFactory = GetComponent<MemberFactory>();
         _spawner = new EntitySpawner(MemberPrefabName, transform, _damageDisplayer);
         _members = new KdTree<EntityBase>(true);
-        _synergyHandler = new SynergyHandler();
     }
 
     public void Progress(EnemyHandler enemyHandler) {
@@ -39,6 +38,7 @@ public class MemberHandler : MonoBehaviour {
         for (int i = 0; i < _members.Count; ++i) {
             var member = _members[i];
             if (member.Health <= 0 || !member.gameObject.activeSelf) {
+                ChangeSynergy(member, false);
                 _spawner.RemoveEntity(member);
                 _members.RemoveAt(i--);
             }
@@ -52,6 +52,8 @@ public class MemberHandler : MonoBehaviour {
 
         newEntity.InitializeInteractiveSettings(_rewardControl.OnItemRelease);
         newEntity.InitializeEncounterSettings(OnEntitySold);
+
+        ChangeSynergy(newEntity, true);
         _members.Add(newEntity);
     }
 
@@ -75,27 +77,6 @@ public class MemberHandler : MonoBehaviour {
         }
     }
 
-    public void ApplySynergies() {
-        int starts = (int)SynergyType.None + 1;
-        int ends = (int)SynergyType.Count;
-        for (int i = starts; i < ends; ++i) {
-            SynergyType type = (SynergyType)i;
-            (BuffConfig, BuffConfig) buffPair = _synergyHandler.GetSynergyBuffPair(type);
-            if (buffPair.Item2 != null) {
-                ApplyBuffToAll(buffPair.Item2, buffPair.Item1);
-            }
-        }
-    }
-
-    private void ApplyBuffToAll(BuffConfig toApply, BuffConfig toRemove) {
-        foreach (EntityBase entity in _members) {
-            entity.BuffControl.AddBuff(toApply);
-            if (toRemove != null) {
-                entity.BuffControl.RemoveBuff(toRemove);
-            }
-        }
-    }
-
     public bool DoesEveryoneHasItem() {
         bool result = true;
         foreach (EntityBase entity in _members) {
@@ -113,5 +94,11 @@ public class MemberHandler : MonoBehaviour {
         // 다음 Progress에 지워짐
         entity.gameObject.SetActive(false);
         SpawnMember(position);        
+    }
+
+    private void ChangeSynergy(EntityBase entity, bool isAdded) {
+        _synergyHandler.ApplyAllSynergyBuffs(Members, true);
+        _synergyHandler.ChangeSynergy(entity, isAdded);
+        _synergyHandler.ApplyAllSynergyBuffs(Members, false);
     }
 }
