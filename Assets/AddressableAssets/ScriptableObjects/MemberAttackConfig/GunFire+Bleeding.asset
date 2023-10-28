@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1047de24dd461f4aa538e7d5b5ae5a0, type: 3}
-  m_Name: GunFire+ADBuff
+  m_Name: GunFire+Bleeding
   m_EditorClassIdentifier: 
   _attackConfig:
     targetLayerMask:
@@ -25,10 +25,10 @@ MonoBehaviour:
   _skillConfig:
     targetLayerMask:
       serializedVersion: 2
-      m_Bits: 128
-    attackBehaviour: {fileID: 11400000, guid: 1fa345527288997449af89e53828396c, type: 2}
+      m_Bits: 64
+    attackBehaviour: {fileID: 11400000, guid: a5364f18f103e384b8f7c7b07cbe5c4d, type: 2}
     attackEffects:
-    - {fileID: 11400000, guid: 4200b52a358d74b4e8ab84e8ca52692a, type: 2}
+    - {fileID: 11400000, guid: bd25987662fb882438ecb60f4d385779, type: 2}
     weaponSprite: {fileID: 21300000, guid: 766bc9a64a0153446aa91f17367b5ea4, type: 3}
     attackDistance: 150
     soundEffectName: se_swing_ver1

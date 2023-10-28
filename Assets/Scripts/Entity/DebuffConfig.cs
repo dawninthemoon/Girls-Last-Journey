@@ -10,6 +10,8 @@ public struct DebuffInfo {
         public float durtaion;
     }
     public Pair<bool> stun;
+    public Pair<bool> bleeding;
+    public Pair<bool> burn;
 }
 
 [CreateAssetMenu(fileName = "NewDebuffConfig", menuName = "ScriptableObjects/DebuffConfig")]
