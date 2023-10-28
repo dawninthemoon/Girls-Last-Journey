@@ -10,14 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c552c1f70f0dcbe4e870cf12f13a3880, type: 3}
-  m_Name: BuffGirlSkillBuff
+  m_Name: AttackDamageBuff
   m_EditorClassIdentifier: 
   _buffInfo:
-    buffDuration: 0
+    buffName: ADBoost
+    buffDuration: 1
     health: 0
     mana: 0
     morale: 0
+    block: 0
     attackDamage: 0
-    attackSpeed: 1
+    attackDamagePercent: 0.5
+    attackSpeed: 0
     moveSpeed: 0
     attackRange: 0
+    healthRegen: 0
+    aimingEfficiency: 0
