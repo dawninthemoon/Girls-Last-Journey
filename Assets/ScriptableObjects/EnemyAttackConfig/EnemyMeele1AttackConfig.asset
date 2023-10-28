@@ -20,6 +20,7 @@ MonoBehaviour:
     attackEffects:
     - {fileID: 11400000, guid: 15f55f9361eb44444ae06c473833c453, type: 2}
     weaponSprite: {fileID: 0}
+    attackDistance: 40
     soundEffectName: se_deep_slash
   _skillConfig:
     targetLayerMask:
@@ -29,4 +30,5 @@ MonoBehaviour:
     attackEffects:
     - {fileID: 11400000, guid: 15f55f9361eb44444ae06c473833c453, type: 2}
     weaponSprite: {fileID: 0}
+    attackDistance: 40
     soundEffectName: se_deep_slash

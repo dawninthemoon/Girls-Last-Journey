@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1047de24dd461f4aa538e7d5b5ae5a0, type: 3}
-  m_Name: GunFire
+  m_Name: GunFire2
   m_EditorClassIdentifier: 
   _attackConfig:
     targetLayerMask:
@@ -26,9 +26,9 @@ MonoBehaviour:
     targetLayerMask:
       serializedVersion: 2
       m_Bits: 64
-    attackBehaviour: {fileID: 11400000, guid: 0af04e59b02449241b73510831313675, type: 2}
+    attackBehaviour: {fileID: 11400000, guid: 1fa345527288997449af89e53828396c, type: 2}
     attackEffects:
     - {fileID: 11400000, guid: da1335e2f506079439a1a44bd56d366d, type: 2}
     weaponSprite: {fileID: 21300000, guid: 766bc9a64a0153446aa91f17367b5ea4, type: 3}
-    attackDistance: 60
+    attackDistance: 2000
     soundEffectName: se_swing_ver1

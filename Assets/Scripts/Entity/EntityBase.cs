@@ -87,7 +87,7 @@ public class EntityBase : MonoBehaviour {
         _healthManaControl.Initialize(entityDecorator);
         _animationControl.Initialize(Info.bodySprite, weaponSprite, Info.animatorController);
         
-        _agent.Initialize(_entityDecorator, Radius);
+        _agent.Initialize(_entityDecorator, Radius, GetAttackDistance);
 
         InitalizeStatus();
     }
@@ -187,6 +187,7 @@ public class EntityBase : MonoBehaviour {
 
         _healthManaControl.AddMana(10);
 
+        float attackDistance = GetAttackDistance();
         AttackInfo config = Info.attackConfig.AttackConfig;
         if (_healthManaControl.IsManaFull) {
             _healthManaControl.Mana = 0;
@@ -196,7 +197,7 @@ public class EntityBase : MonoBehaviour {
 
         var effects = config.attackEffects;
         List<EntityBase> targets 
-            = Physics2D.OverlapCircleAll(transform.position, _entityDecorator.AttackRange + Radius * 2.5f, config.targetLayerMask)
+            = Physics2D.OverlapCircleAll(transform.position, attackDistance + Radius * 2.5f, config.targetLayerMask)
                 .Select(x => x.GetComponent<EntityBase>())
                 .Where(x => x.Health > 0)
                 .OrderBy(x => (x.transform.position - transform.position).sqrMagnitude)
@@ -242,6 +243,14 @@ public class EntityBase : MonoBehaviour {
 
     private void OnEntityDead() {
         gameObject.SetActive(false);
+    }
+
+    private float GetAttackDistance() {
+        AttackInfo config = Info.attackConfig.AttackConfig;
+        if (_healthManaControl.IsManaFull) {
+            config = Info.attackConfig.SkillConfig;
+        }
+        return config.attackDistance;
     }
 
     private void OnTriggerStay2D(Collider2D other) {

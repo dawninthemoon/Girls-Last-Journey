@@ -26,7 +26,7 @@ public class TargetDetector : Detector {
                     = GetMaxRangePosition(
                         aiData.SelectedTarget,
                         direction,
-                        aiData.AttackRange,
+                        aiData.SafeDistance,
                         aiData.Radius
                     );
 

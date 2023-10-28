@@ -26,6 +26,7 @@ public class Agent : MonoBehaviour, ITargetable {
     }
     private bool _attackPressed;
     private bool _stopMovement;
+    private System.Func<float> _attackDistanceCallback;
 
     private void Awake() {
         _aiData = new AIData();
@@ -33,11 +34,12 @@ public class Agent : MonoBehaviour, ITargetable {
         OnAttackRequested.AddListener(StartMovementStopProgress);
     }
 
-    public void Initialize(EntityDecorator status, float radius) {
+    public void Initialize(EntityDecorator status, float radius, System.Func<float> attackDistance) {
         _entityStatus = status;
         Radius = radius;
         _aiData.Radius = radius;
-        _aiData.AttackRange = _entityStatus.AttackRange;
+        _aiData.SafeDistance = attackDistance.Invoke();
+        _attackDistanceCallback = attackDistance;
     }
 
     private void OnEnable() {
@@ -82,7 +84,7 @@ public class Agent : MonoBehaviour, ITargetable {
         while (gameObject.activeSelf) {
             if (_aiData.SelectedTarget != null) {
                 float distance = Vector2.Distance(_aiData.SelectedTarget.Position, transform.position);
-                if (distance - Mathf.Sqrt(_aiData.SelectedTarget.Radius) < _entityStatus.AttackRange) {
+                if (distance - Mathf.Sqrt(_aiData.SelectedTarget.Radius) < _attackDistanceCallback.Invoke()) {
                     OnAttackRequested?.Invoke();
 
                     float attackDelay = 1f / _entityStatus.AttackSpeed;

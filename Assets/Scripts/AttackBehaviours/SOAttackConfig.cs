@@ -10,6 +10,7 @@ public struct AttackInfo {
     public AttackBehaviour attackBehaviour;
     public AttackEffect[] attackEffects;
     public Sprite weaponSprite;
+    public float attackDistance;
     public string soundEffectName;
 }
 

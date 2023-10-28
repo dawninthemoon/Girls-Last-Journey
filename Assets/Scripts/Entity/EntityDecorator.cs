@@ -116,19 +116,6 @@ public class EntityDecorator : IEntityStatus {
         }
     }
 
-    public int AttackRange {
-        get { 
-            int finalAttackRange = Info.status.AttackRange;
-
-            if (Item)
-                finalAttackRange += Item.AttackRange;
-            foreach (IEntityStatus buff in _buffList) {
-                finalAttackRange += buff.AttackRange;
-            }
-            return finalAttackRange;
-        }
-    }
-
     public int HealthRegen {
         get { 
             return Info.status.HealthRegen;

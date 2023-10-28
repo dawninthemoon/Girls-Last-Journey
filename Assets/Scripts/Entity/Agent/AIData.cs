@@ -15,7 +15,7 @@ public class AIData {
         get;
         set;
     }
-    public float AttackRange {
+    public float SafeDistance {
         get;
         set;
     }
