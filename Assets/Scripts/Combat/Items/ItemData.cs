@@ -23,7 +23,7 @@ public class ItemData : ScriptableObject, IEntityStatus {
     public float AttackSpeed { get { return _attackSpeed; } }
     public int MoveSpeed { get { return _moveSpeed; } }
     public int AttackRange { get { return _attackRange; } }
-    public int HealthRegen { get { return _healthRegen; } }
+    public int HealthRegenPercent { get { return _healthRegen; } }
     public SynergyType ExtraSynergy { get { return _extraSynergy; } }
 
     public Sprite Sprite { get { return _sprite; } }

@@ -11,6 +11,7 @@ public class EntityStatus : ScriptableObject, IEntityStatus {
     [SerializeField] private float _attackSpeed;
     [SerializeField] private int _moveSpeed;
     [SerializeField] private int _healthRegen;
+    [SerializeField] private int _manaRegen;
 
     public int Health { get { return _health; } }
     public int Mana { get { return _mana; } }
@@ -19,4 +20,5 @@ public class EntityStatus : ScriptableObject, IEntityStatus {
     public float AttackSpeed { get { return _attackSpeed; } }
     public int MoveSpeed { get { return _moveSpeed; } }
     public int HealthRegen { get { return _healthRegen; } }
+    public int ManaRegen { get { return _manaRegen; } }
 }
