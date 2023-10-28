@@ -14,6 +14,7 @@ public class ItemData : ScriptableObject, IEntityStatus {
     [SerializeField] private int _moveSpeed;
     [SerializeField] private int _attackRange;
     [SerializeField] private int _healthRegen;
+    [SerializeField] private int _manaRegen;
     [SerializeField] private SynergyType _extraSynergy = SynergyType.None;
     
     public int Health { get { return _health; } }
@@ -24,6 +25,7 @@ public class ItemData : ScriptableObject, IEntityStatus {
     public int MoveSpeed { get { return _moveSpeed; } }
     public int AttackRange { get { return _attackRange; } }
     public int HealthRegen { get { return _healthRegen; } }
+    public int ManaRegen { get { return _manaRegen; } }
     public SynergyType ExtraSynergy { get { return _extraSynergy; } }
 
     public Sprite Sprite { get { return _sprite; } }

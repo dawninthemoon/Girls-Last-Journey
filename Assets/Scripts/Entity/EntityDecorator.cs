@@ -62,19 +62,23 @@ public class EntityDecorator : IEntityStatus {
     public int Block {
         get {
             int finalBlock = Info.status.Block;
+            float blockMultiplier = 0f;
 
             if (Item)
                 finalBlock += Item.Block;
-            foreach (IEntityStatus buff in _buffList) {
+            foreach (BuffConfig buff in _buffList) {
                 finalBlock += buff.Block;
             }
+            foreach (BuffConfig buff in _buffList) {
+                blockMultiplier += buff.BlockPercent;
+            }
+            finalBlock += Mathf.FloorToInt(finalBlock * blockMultiplier);
             return finalBlock;
         }
     }
     public int AttackDamage { 
         get {
             int finalDamage = Info.status.AttackDamage;
-            
             float damageMultiplier = 0f;
 
             if (Item)
@@ -118,9 +122,46 @@ public class EntityDecorator : IEntityStatus {
 
     public int HealthRegen {
         get { 
-            return Info.status.HealthRegen;
+            int finalHealthRegen = Info.status.HealthRegen;
+            float healthRegenMultiplier = 0f;
+
+            if (Item) {
+                finalHealthRegen += Item.HealthRegen;
+            }
+
+            foreach (BuffConfig buff in _buffList) {
+                finalHealthRegen += buff.HealthRegen;
+            }
+            foreach (BuffConfig buff in _buffList) {
+                healthRegenMultiplier += buff.HealthRegenPercent;
+            }
+            finalHealthRegen += Mathf.FloorToInt(finalHealthRegen * healthRegenMultiplier);
+
+            return finalHealthRegen;
         }
     }
+
+    public int ManaRegen {
+        get { 
+            int finalManaRegen = Info.status.ManaRegen;
+            float manaRegenMultiplier = 0f;
+
+            if (Item) {
+                finalManaRegen += Item.ManaRegen;
+            }
+
+            foreach (BuffConfig buff in _buffList) {
+                finalManaRegen += buff.ManaRegen;
+            }
+            foreach (BuffConfig buff in _buffList) {
+                manaRegenMultiplier += buff.ManaRegenPercent;
+            }
+
+            finalManaRegen += Mathf.FloorToInt(finalManaRegen * manaRegenMultiplier);
+            return finalManaRegen;
+        }
+    }
+
 
     public float AimingEfficiency {
         get { 

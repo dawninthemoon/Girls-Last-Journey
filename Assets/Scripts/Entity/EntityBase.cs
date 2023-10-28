@@ -223,6 +223,10 @@ public class EntityBase : MonoBehaviour {
         }
     }
 
+    public void Heal(int amount) {
+        _healthManaControl.AddHealth(amount);
+    }
+
     public void GainExp(int amount) {
         int requireExp = 180 + _entityDecorator.Level * 100;
         _exp += amount;

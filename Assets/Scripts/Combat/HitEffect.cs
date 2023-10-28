@@ -15,15 +15,17 @@ public class HitEffect : MonoBehaviour {
         _entityBase = GetComponent<EntityBase>();
     }
 
-    public void ApplyKnockback(Vector2 direction, float force, int damage, float freezeDuration, DebuffConfig debuff) {
+    public void ApplyKnockback(Vector2 direction, float force, int damage, float freezeDuration, DebuffConfig debuff = null) {
         ApplyHitEffect(direction, force, damage, freezeDuration, debuff).Forget();
     }
 
     private async UniTaskVoid ApplyHitEffect(Vector2 direction, float force, int damage, float freezeDuration, DebuffConfig debuff) {
         _bodyRenderer.material.SetFloat(FlashAmountKey, 1f);
 
+        if (debuff != null) {
+            _entityBase.BuffControl.StartAddDebuff(debuff);
+        }
         _entityBase.ReceiveDamage(damage);
-        _entityBase.BuffControl.StartAddDebuff(debuff);
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(freezeDuration));
 
