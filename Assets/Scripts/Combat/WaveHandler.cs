@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using TMPro;
 
 public class WaveHandler : MonoBehaviour {
     [SerializeField] private float _waveTimeLimit = 30f;
     [SerializeField] private Button _waveTimerButton;
+    [SerializeField] private TMP_Text _currentWaveText;
     [SerializeField] private EnemyHandler _enemyHandler;
     [SerializeField] private EncounterHandler _encounterHandler;
     private ExTimeCounter _waveTimeCounter;
@@ -53,6 +55,7 @@ public class WaveHandler : MonoBehaviour {
 
     public void StartNewWave() {
         ++CurrentWave;
+        _currentWaveText.text = CurrentWave.ToString();
         _waveTimeCounter.InitTimer(NextWaveTimerKey, 0f, _waveTimeLimit);
         _enemyHandler.SpawnEnemies(CurrentWave, null);
 
