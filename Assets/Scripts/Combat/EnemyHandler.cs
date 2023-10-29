@@ -76,18 +76,12 @@ public class EnemyHandler : MonoBehaviour {
         
         for (int i = 0; i < selectedWave.enemyIDArray.Length; ++i) {
             float randX = Random.Range(stageMinSize.x, stageMaxSize.x);
-            float y;
-            if (waveCount == 1) {
-                y = Random.Range(stageMinSize.y / 4f, stageMaxSize.y / 4f);
-            }
-            else {
-                 y = Random.Range(0, 2) > 0 ? stageMaxSize.y + _enemyPrefab.Radius : stageMinSize.y - _enemyPrefab.Radius;
-            }
+            float randY = Random.Range(0, 2) > 0 ? stageMaxSize.y + _enemyPrefab.Radius : stageMinSize.y - _enemyPrefab.Radius;
             
             EntityInfo selectedInfo = _enemyInfoDictionary[selectedWave.enemyIDArray[i]];
             EntityDecorator decorator = new EntityDecorator(selectedInfo);
             EntityBase enemy = _enemySpawner.CreateEntity(decorator);
-            enemy.transform.position = new Vector3(randX, y, -5f);
+            enemy.transform.position = new Vector3(randX, randY, -5f);
 
             _activeEnemies.Add(enemy);
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class EntityHealthMana {
     private int _currentHealth;
@@ -9,22 +10,19 @@ public class EntityHealthMana {
     private EntityUIControl _uiControl;
     public int Health {
         get { return _currentHealth; }
-        set { 
+        set {
             _currentHealth = value;
-            _uiControl.UpdateHealthBar(_currentHealth, _entityDecorator.Health);
+            _uiControl.UpdateHealthBar(Health, _entityDecorator.Health);
         }
     }
     public int Mana { 
         get { return _currentMana; }
         set { 
             _currentMana = value;
-            _uiControl.UpdateManaBar(_currentMana, _entityDecorator.Mana);
+            _uiControl.UpdateManaBar(Mana, _entityDecorator.Mana);
         }
     }
-
-    public bool IsManaFull {
-        get { return _currentMana >= _entityDecorator.Mana; }
-    }
+    private static readonly double RegenDelay = 1.0;
 
     public EntityHealthMana(EntityUIControl uiControl) {
         _uiControl = uiControl;
@@ -33,15 +31,17 @@ public class EntityHealthMana {
     public void Initialize(EntityDecorator decorator) {
         _entityDecorator = decorator;
         _currentHealth = _entityDecorator.Health;
-        _currentMana = _entityDecorator.Mana;
+
+        RegenProgress().Forget();
     }
 
-    public void Progress() {
-        Health = Mathf.Min(_currentHealth + _entityDecorator.HealthRegen, _entityDecorator.Health);
-    }
+    private async UniTaskVoid RegenProgress() {
+        while (_uiControl.gameObject.activeSelf) {
+            Health = Mathf.Min(_currentHealth + _entityDecorator.HealthRegen, _entityDecorator.Health);
+            Mana = Mathf.Min(_currentMana + _entityDecorator.ManaRegen, _entityDecorator.Mana);
 
-    public void ReceiveDamage(int finalDamage) {
-        ReduceHealth(finalDamage);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(RegenDelay));
+        }
     }
 
     public void AddHealth(int amount) {
@@ -57,6 +57,6 @@ public class EntityHealthMana {
     }
 
     public void ReduceMana(int amount) {
-        Health = Mathf.Max(_currentMana - amount, 0);
+        Mana = Mathf.Max(_currentMana - amount, 0);
     }
 }

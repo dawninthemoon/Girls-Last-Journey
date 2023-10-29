@@ -7,6 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public struct AttackInfo {
     public LayerMask targetLayerMask;
+    public int cost;
     public AttackBehaviour attackBehaviour;
     public AttackEffect[] attackEffects;
     public Sprite weaponSprite;

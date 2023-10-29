@@ -79,22 +79,18 @@ public class EntityBase : MonoBehaviour {
 
     public void Initialize(EntityDecorator entityDecorator) {
         _entityDecorator = entityDecorator;
-        BuffControl.Initialize(_entityDecorator);
-
         EquipItem(null);
-        _bulletPosition.localPosition = Info.bulletOffset;
-
-        Sprite weaponSprite = Info.attackConfig.AttackConfig.weaponSprite;
 
         _healthManaControl.Initialize(entityDecorator);
+        InitalizeStatus();
+
+        BuffControl.Initialize(_entityDecorator);
+
+        _bulletPosition.localPosition = Info.bulletOffset;
+        Sprite weaponSprite = Info.attackConfig.AttackConfig.weaponSprite;
         _animationControl.Initialize(Info.bodySprite, weaponSprite, Info.animatorController);
         
-        InitalizeStatus();
         _agent.Initialize(_entityDecorator, Radius, GetAttackDistance);
-    }
-
-    private void Update() {
-        _healthManaControl.Progress();
     }
 
     private void InitalizeStatus() {
@@ -183,12 +179,10 @@ public class EntityBase : MonoBehaviour {
             return;
         }
 
-        _healthManaControl.AddMana(10);
-
         float attackDistance = GetAttackDistance();
         AttackInfo config = Info.attackConfig.AttackConfig;
-        if (_healthManaControl.IsManaFull) {
-            _healthManaControl.Mana = 0;
+        if (_healthManaControl.Mana >= Info.attackConfig.SkillConfig.cost) {
+            _healthManaControl.ReduceMana(Info.attackConfig.SkillConfig.cost);
             config = Info.attackConfig.SkillConfig;
         }
         _animationControl.PlayAttackAnimation();
@@ -207,6 +201,7 @@ public class EntityBase : MonoBehaviour {
             _animationControl.SetFaceDir(direction);
 
             SoundManager.Instance.PlayGameSe(config.soundEffectName);
+            
             config.attackBehaviour.Behaviour(this, targets, effects);
         }
     }
@@ -214,14 +209,13 @@ public class EntityBase : MonoBehaviour {
     public void ReceiveDamage(int damage, EntityBase caster = null) {
         if (Health <= 0) return;
 
-        _healthManaControl.AddMana(10);
         int finalDamage = Mathf.Max(1, damage - _entityDecorator.Block);
 
-        _healthManaControl.ReceiveDamage(finalDamage);
+        _healthManaControl.ReduceHealth(finalDamage);
         FinalDamageInfo.ReceiveDamage(damage, caster);
-
+        
         if (Health <= 0) {
-           OnEntityDead();
+            OnEntityDead();
         }
     }
 
@@ -249,7 +243,7 @@ public class EntityBase : MonoBehaviour {
 
     private float GetAttackDistance() {
         AttackInfo config = Info.attackConfig.AttackConfig;
-        if (_healthManaControl.IsManaFull) {
+        if (_healthManaControl.Mana >= Info.attackConfig.SkillConfig.cost) {
             config = Info.attackConfig.SkillConfig;
         }
         return config.attackDistance;
