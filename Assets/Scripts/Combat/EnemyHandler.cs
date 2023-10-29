@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using RieslingUtils;
 
 public class EnemyHandler : MonoBehaviour {
     [SerializeField] private CombatDamageDisplay _damageDisplayer;
@@ -68,17 +69,11 @@ public class EnemyHandler : MonoBehaviour {
         Vector2 stageMinSize = CombatMap.StageMinSize;
         Vector2 stageMaxSize = CombatMap.StageMaxSize;
 
-        //int waveRank = stageConfig.StageInfoArray[waveCount - 1];
-        int waveRank = 1;
-
-        CombatWaveConfig waveConfig = _waveConfigDictionary[waveRank];
-        CombatWaveInfo selectedWave = waveConfig.WaveInfoArray[Random.Range(0, waveConfig.WaveInfoArray.Length)];
-        
-        for (int i = 0; i < selectedWave.enemyIDArray.Length; ++i) {
-            float randX = Random.Range(stageMinSize.x, stageMaxSize.x);
+        for (int i = 0; i < waveCount; ++i) {
+             float randX = Random.Range(stageMinSize.x, stageMaxSize.x);
             float randY = Random.Range(0, 2) > 0 ? stageMaxSize.y + _enemyPrefab.Radius : stageMinSize.y - _enemyPrefab.Radius;
             
-            EntityInfo selectedInfo = _enemyInfoDictionary[selectedWave.enemyIDArray[i]];
+            EntityInfo selectedInfo = _enemyInfoDictionary.GetRandomValue();
             EntityDecorator decorator = new EntityDecorator(selectedInfo);
             EntityBase enemy = _enemySpawner.CreateEntity(decorator);
             enemy.transform.position = new Vector3(randX, randY, -5f);
