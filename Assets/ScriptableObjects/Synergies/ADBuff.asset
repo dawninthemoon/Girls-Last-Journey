@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c552c1f70f0dcbe4e870cf12f13a3880, type: 3}
-  m_Name: SynergyAttackDamage
+  m_Name: ADBuff
   m_EditorClassIdentifier: 
   _buffInfo:
     buffName: DoubleItemDrop

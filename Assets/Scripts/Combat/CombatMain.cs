@@ -14,6 +14,7 @@ public class CombatMain : MonoBehaviour {
     private async UniTaskVoid Start() {
         var soundManager = SoundManager.Instance;
         var projectileSpawner = ProjectileSpawner.Instance;
+        var fxManager = FxManager.Instance;
 
         // 나중에 로드되면 시작하게끔 수정
         await UniTask.Delay(System.TimeSpan.FromSeconds(3f));

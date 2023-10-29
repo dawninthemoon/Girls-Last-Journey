@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 138caf9ca5e374940af398bf972a0235
     m_Address: Fx
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Effects
   - m_GUID: b6f5ca16f6183d84abd2f7442ade35a1
     m_Address: Projectiles
     m_ReadOnly: 0

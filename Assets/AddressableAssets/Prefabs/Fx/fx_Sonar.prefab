@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5058128445729848135}
   - component: {fileID: 5058128445729848134}
   m_Layer: 5
-  m_Name: fxSonar
+  m_Name: fx_Sonar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

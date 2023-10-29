@@ -98,6 +98,7 @@ MonoBehaviour:
     - Projectiles
     - ItemData
     - Encounters
+    - Effects
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 114913bfc0406ca418ffcafabf072521, type: 2}

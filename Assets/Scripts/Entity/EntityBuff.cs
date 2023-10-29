@@ -5,13 +5,13 @@ using Cysharp.Threading.Tasks;
 using System;
 
 public class EntityBuff {
-    private MonoBehaviour _executer;
+    private MonoBehaviour _parent;
     private EntityDecorator _status;
     private Dictionary<string, int> _currentDebuffSet;
 
-    public EntityBuff(MonoBehaviour executer) {
+    public EntityBuff(MonoBehaviour parent) {
         _currentDebuffSet = new Dictionary<string, int>();
-        _executer = executer;
+        _parent = parent;
     }
 
     public void Initialize(EntityDecorator status) {
@@ -32,6 +32,15 @@ public class EntityBuff {
 
     public void AddBuffWithDuration(BuffConfig buffConfig) {
         AddBuff(buffConfig, buffConfig.Info.buffDuration).Forget();
+
+        // 나중에 캐싱해서 수정
+        string fxName = "fx_" + nameof(buffConfig);
+        FxManager.Instance.SpawnParticle(
+            fxName,
+            _parent.transform.position,
+            buffConfig.Info.buffDuration,
+            _parent.transform
+        );
     }
 
     public void StartAddDebuff(DebuffConfig debuffConfig) {
@@ -39,6 +48,14 @@ public class EntityBuff {
 
         if (info.stun.value) {
             AddDebuff(nameof(info.stun), info.stun.durtaion).Forget();
+            // 나중에 캐싱해서 수정
+            string fxName = "fx_" + nameof(info.stun);
+            FxManager.Instance.SpawnParticle(
+                fxName,
+                _parent.transform.position,
+                info.stun.durtaion,
+                _parent.transform
+            );
         }
     }
 
