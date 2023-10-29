@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RieslingUtils;
 
 public class EntityDecorator : IEntityStatus {
     private List<BuffConfig> _buffList;
@@ -48,7 +49,7 @@ public class EntityDecorator : IEntityStatus {
 
     public int Health { 
         get {
-            int finalHealth = Info.status.Health;
+            int finalHealth = Info.status.Health.IncreaseByLevel(FinalLevel);
 
             if (Item)
                 finalHealth += Item.Health;
@@ -60,7 +61,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int Mana { 
         get {
-            int finalMana = Info.status.Mana;
+            int finalMana = Info.status.Mana.IncreaseByLevel(FinalLevel);
 
             if (Item)
                 finalMana += Item.Mana;
@@ -72,7 +73,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int Block {
         get {
-            int finalBlock = Info.status.Block;
+            int finalBlock = Info.status.Block.IncreaseByLevel(FinalLevel);
             float blockMultiplier = 0f;
 
             if (Item)
@@ -89,7 +90,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int AttackDamage { 
         get {
-            int finalDamage = Info.status.AttackDamage;
+            int finalDamage = Info.status.AttackDamage.IncreaseByLevel(FinalLevel);
             float damageMultiplier = 0f;
 
             if (Item)
@@ -106,7 +107,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public float AttackSpeed { 
         get {
-            float finalAttackSpeed = Info.status.AttackSpeed;
+            float finalAttackSpeed = Info.status.AttackSpeed.IncreaseByLevel(FinalLevel);
             float attackSpeedMultiplier = 0f;
 
             if (Item)
@@ -120,7 +121,7 @@ public class EntityDecorator : IEntityStatus {
     }
     public int MoveSpeed { 
         get {
-            int finalMoveSpeed = Info.status.MoveSpeed;
+            int finalMoveSpeed = Info.status.MoveSpeed.IncreaseByLevel(FinalLevel);
             float moveSpeedMultiplier = 0f;
 
             if (Item) {
@@ -139,7 +140,7 @@ public class EntityDecorator : IEntityStatus {
 
     public int HealthRegen {
         get { 
-            int finalHealthRegen = Info.status.HealthRegen;
+            int finalHealthRegen = Info.status.HealthRegen.IncreaseByLevel(FinalLevel);;
             float healthRegenMultiplier = 0f;
 
             if (Item) {
@@ -160,7 +161,7 @@ public class EntityDecorator : IEntityStatus {
 
     public int ManaRegen {
         get { 
-            int finalManaRegen = Info.status.ManaRegen;
+            int finalManaRegen = Info.status.ManaRegen.IncreaseByLevel(FinalLevel);;
             float manaRegenMultiplier = 0f;
 
             if (Item) {
