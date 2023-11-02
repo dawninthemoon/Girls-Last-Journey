@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class SynergyHandler : MonoBehaviour {
+    [SerializeField] private DescriptionUI _synergyIconPrefab;
     private int[] _numOfSynergiesArray;
     private Dictionary<SynergyType, SynergyConfig> _synergyConfigDictionary;
     private HashSet<SynergyConfig> _currentSynergySet;

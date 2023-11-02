@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Address: EnemyPrefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 75655c6d1c7eee94c9249fb7d0f67553
+    m_Address: TextPopupWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 4168a31106270f044a6b66cb7c39d9d5, type: 2}
   m_SchemaSet:
