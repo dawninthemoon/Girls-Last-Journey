@@ -643,6 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _synergyHandler: {fileID: 295863416}
+  _goldUIText: {fileID: 772491616}
   _initialGold: 100
 --- !u!1 &399274412
 GameObject:
@@ -1631,7 +1632,6 @@ GameObject:
   - component: {fileID: 772491615}
   - component: {fileID: 772491617}
   - component: {fileID: 772491616}
-  - component: {fileID: 772491618}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1656,8 +1656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 51.4344, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 132.0301, y: 15.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &772491616
 MonoBehaviour:
@@ -1679,7 +1679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACE8\uB4DC \uD45C\uAE30"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 43865c49be1140a43ac3fed57bf13d97, type: 2}
   m_sharedMaterial: {fileID: 5044501520264010708, guid: 43865c49be1140a43ac3fed57bf13d97, type: 2}
@@ -1756,20 +1756,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772491614}
   m_CullTransparentMesh: 1
---- !u!114 &772491618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772491614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!1 &913161782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,7 +3225,7 @@ GameObject:
   - component: {fileID: 1774220341}
   - component: {fileID: 1774220342}
   m_Layer: 5
-  m_Name: "\uC2DC\uB108\uC9C0\uADF8\uB8F9"
+  m_Name: SynergyGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3565,7 +3551,7 @@ GameObject:
   - component: {fileID: 1907201209}
   - component: {fileID: 1907201210}
   m_Layer: 5
-  m_Name: "\uACE8\uB4DC"
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
