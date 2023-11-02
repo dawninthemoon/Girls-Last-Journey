@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Defective.JSON;
+using RieslingUtils;
 
 public class SynergyHandler : MonoBehaviour {
+    [SerializeField] private GameObject _popupWindowPrefab;
     [SerializeField] private DescriptionUI _synergyIconPrefab;
+    [SerializeField] private Transform _synergyCanvas;
+    [SerializeField] private Transform _synergyUIParent;
     private int[] _numOfSynergiesArray;
     private Dictionary<SynergyType, SynergyConfig> _synergyConfigDictionary;
+    private Dictionary<SynergyType, DescriptionUI> _synergyIconDictionary;
     private HashSet<SynergyConfig> _currentSynergySet;
     public float ExtraItemDropPercent {
         get;
@@ -19,12 +25,34 @@ public class SynergyHandler : MonoBehaviour {
 
     private void Awake() {
         _currentSynergySet = new HashSet<SynergyConfig>();
+        _synergyIconDictionary = new Dictionary<SynergyType, DescriptionUI>();
         _numOfSynergiesArray = new int[(int)SynergyType.Count];
 
         ExtraGoldGainPercent = ExtraItemDropPercent = 1f;
 
         AssetLoader.Instance.LoadAssetsAsync<SynergyConfig>("MemberInfo", (op) => {
             _synergyConfigDictionary = op.Result.ToDictionary(x => x.Type);
+        });
+        InitializeSynergyDescriptionInfo();
+    }
+
+    private void InitializeSynergyDescriptionInfo() {
+        AssetLoader.Instance.LoadAssetAsync<TextAsset>("SynergyDescriptionInfo", (op) => {
+            JSONObject jsonObject = new JSONObject(op.Result.ToString());
+            foreach (JSONObject synergyDescriptionData in jsonObject.list) {
+                string key = synergyDescriptionData.GetField("Key").stringValue;
+                string name = synergyDescriptionData.GetField("Name").stringValue;
+                string desc = synergyDescriptionData.GetField("Description").stringValue;
+                SynergyType type = ExEnum.Parse<SynergyType>(key);
+
+                DescriptionUI synergyIcon = Instantiate(_synergyIconPrefab, _synergyUIParent);
+                GameObject popupWindow = Instantiate(_popupWindowPrefab, _synergyCanvas);
+                
+                synergyIcon.Initialize(popupWindow, desc);
+                synergyIcon.gameObject.SetActive(false);
+
+                _synergyIconDictionary.Add(type, synergyIcon);
+            }
         });
     }
 
@@ -66,9 +94,16 @@ public class SynergyHandler : MonoBehaviour {
 
         if ((_numOfSynergiesArray[synergyIndex] > 1) && !isSynergyAlreadyExists) {
             _currentSynergySet.Add(synergyConfig);
+            ToggleSynergyUI(synergy, true);
         }
         else if ((_numOfSynergiesArray[synergyIndex] < 2) && isSynergyAlreadyExists) {
             _currentSynergySet.Remove(synergyConfig);
+            ToggleSynergyUI(synergy, false);
         }
+    }
+
+    // TODO: 최적화
+    private void ToggleSynergyUI(SynergyType synergy, bool isAdded) {
+        _synergyIconDictionary[synergy].gameObject.SetActive(isAdded);
     }
 }

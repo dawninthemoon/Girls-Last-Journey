@@ -1,0 +1,62 @@
+{
+  "SMG": {
+    "Key": "SMG",
+    "Name": "SMG",
+    "IconKey": null,
+    "Description": "Test_SMG"
+  },
+  "Handgun": {
+    "Key": "Handgun",
+    "Name": "Handgun",
+    "IconKey": null,
+    "Description": "Test_Handgun"
+  },
+  "Shotgun": {
+    "Key": "Shotgun",
+    "Name": "Shotgun",
+    "IconKey": null,
+    "Description": "Test_Shotgun"
+  },
+  "Sniper": {
+    "Key": "Sniper",
+    "Name": "Sniper",
+    "IconKey": null,
+    "Description": "Test_Sniper"
+  },
+  "Grenade": {
+    "Key": "Grenade",
+    "Name": "Grenade",
+    "IconKey": null,
+    "Description": "Test_Grenade"
+  },
+  "Flame": {
+    "Key": "Flame",
+    "Name": "Flame",
+    "IconKey": null,
+    "Description": "Test_Flame"
+  },
+  "AcademyA": {
+    "Key": "AcademyA",
+    "Name": "AcademyA",
+    "IconKey": null,
+    "Description": "Test_AcademyA"
+  },
+  "AcademyB": {
+    "Key": "AcademyB",
+    "Name": "AcademyB",
+    "IconKey": null,
+    "Description": "Test_AcademyB"
+  },
+  "AcademyC": {
+    "Key": "AcademyC",
+    "Name": "AcademyC",
+    "IconKey": null,
+    "Description": "Test_AcademyC"
+  },
+  "AcademyD": {
+    "Key": "AcademyD",
+    "Name": "AcademyD",
+    "IconKey": null,
+    "Description": "Test_AcademyD"
+  }
+}

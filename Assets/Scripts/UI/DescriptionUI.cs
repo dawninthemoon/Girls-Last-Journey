@@ -11,13 +11,7 @@ public class DescriptionUI : MonoBehaviour {
     private string _descriptionText;
     private GameObject _popupWindow;
     private TMP_Text _popupWindowText;
-    private static readonly string PopupWindowPrefabName = "TextPopupWindow";
     private void Awake() {
-        AssetLoader.Instance.LoadAssetAsync<GameObject>(PopupWindowPrefabName, (op) => {
-            _popupWindow = Instantiate(op.Result);
-            _popupWindowText = _popupWindow.GetComponentInChildren<TMP_Text>();
-            _popupWindow.SetActive(false);
-        });
         InitializeEventTriggers();
     }
 
@@ -30,19 +24,25 @@ public class DescriptionUI : MonoBehaviour {
 
         EventTrigger.Entry endEntry = new EventTrigger.Entry();
         endEntry.eventID = EventTriggerType.PointerExit;
-        endEntry.callback.AddListener(OnDescriptionStart);
+        endEntry.callback.AddListener(OnDescriptionEnd);
 
         _trigger.triggers.Add(startEntry);
         _trigger.triggers.Add(endEntry);
     }
 
-    public void SetDescriptionText(string text) {
+    public void Initialize(GameObject popupWindow, string text) {
+        _popupWindow = popupWindow;
+        _popupWindowText = popupWindow.GetComponentInChildren<TMP_Text>();
         _descriptionText = text;
+        _popupWindow.SetActive(false);
     }
 
     private void OnDescriptionStart(BaseEventData eventData) {
         _popupWindowText.text = _descriptionText;
-        _popupWindow.SetActive(false);
+        Vector3 windowPosition = transform.position;
+        windowPosition.y += 20f;
+        _popupWindow.transform.position = windowPosition;
+        _popupWindow.SetActive(true);
     }
 
     private void OnDescriptionEnd(BaseEventData eventData) {
